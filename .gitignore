@@ -1,0 +1,7 @@
+vim/bundle/**
+~vim/bundle/vundle
+vim/spellfile.add*
+.netrwhist
+tags
+vim/tmp
+*.pyc

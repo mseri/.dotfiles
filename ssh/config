@@ -1,0 +1,27 @@
+Host dt21
+	HostName dt21.uk.xensource.com
+	User root
+
+Host eddie
+	HostName eddie
+	User marcellos
+
+
+# Test machines
+#Host dt* st* *.xenrt.xs.citrite.net *.xenrt.citrite.net
+#	User root
+#	PreferredAuthentications password
+#	UserKnownHostsFile /dev/null
+#	StrictHostKeyChecking no
+#	LogLevel ERROR
+
+# SSH gateway
+Host citrix-gate
+	Hostname gate.ctxuk.citrix.com
+	User simonbe
+	ForwardAgent yes
+	ForwardX11 yes
+	TCPKeepAlive no
+	# LocalForward 3389 marcellos-xenia:3389
+	# DynamicForward localhost:1080
+

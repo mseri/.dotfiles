@@ -1,0 +1,22 @@
+[user]
+    name = Marcello Seri
+    email = marcello.seri@citrix.com
+[push]
+    default = matching
+[core]
+    editor = nvim
+[color]
+    ui = true
+[format]
+    signOff = true
+[commit]
+    signOff = true
+[alias]
+    st = status -sb
+    co = checkout
+    gl = log --graph --abbrev-commit --oneline --decorate
+[github]
+    user = mseri
+[core]
+    excludesfile = ~/.gitignore_global
+    pager = less -x4,9

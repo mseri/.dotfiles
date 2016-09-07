@@ -1,0 +1,60 @@
+[global_config]
+  enabled_plugins = ,
+  title_font = Roboto Mono for Powerline 12
+  title_hide_sizetext = True
+  title_transmit_bg_color = "#00c800"
+  title_use_system_font = False
+[keybindings]
+  split_horiz = <Primary><Shift>underscore
+  split_vert = <Primary><Shift>bar
+[layouts]
+  [[default]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 37fde7da-3ce4-4651-b9fa-31d86b129468
+      last_active_window = True
+      maximised = False
+      order = 0
+      parent = ""
+      position = 1680:0
+      size = 642, 381
+      title = ~/others
+      type = Window
+    [[[child1]]]
+      order = 0
+      parent = child0
+      position = 318
+      ratio = 0.5
+      type = HPaned
+    [[[child3]]]
+      order = 1
+      parent = child1
+      position = 187
+      ratio = 0.498687664042
+      type = VPaned
+    [[[terminal2]]]
+      order = 0
+      parent = child1
+      profile = default
+      type = Terminal
+      uuid = 37fde7da-3ce4-4651-b9fa-31d86b129468
+    [[[terminal4]]]
+      order = 0
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = 09bf89ad-0dc8-48fa-834f-62e2d58707b0
+    [[[terminal5]]]
+      directory = ""
+      order = 1
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = ef906fd4-01f3-4be4-a2bf-48ed7e0b4d37
+[plugins]
+[profiles]
+  [[default]]
+    background_image = None
+    copy_on_selection = True
+    font = Roboto Mono for Powerline 12
+    use_system_font = False
