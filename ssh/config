@@ -18,7 +18,7 @@ Host eddie
 # SSH gateway
 Host citrix-gate
 	Hostname gate.ctxuk.citrix.com
-	User simonbe
+	User marcellos
 	ForwardAgent yes
 	ForwardX11 yes
 	TCPKeepAlive no

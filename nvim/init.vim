@@ -5,6 +5,13 @@ let g:python3_host_prog = '/usr/bin/python3'
 
 set nocompatible
 
+" install plug and the plugins if not yet installed
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
 filetype off
 call plug#begin('~/.nvim/plugged')
 Plug 'bling/vim-airline'
@@ -97,8 +104,7 @@ set cursorline
 
 " highlight tabs spaces and newlines
 set list
-"set listchars="tab:>,trail:-,nbsp:+,eol:$"
-set listchars+=trail:·,eol:↲,tab:→
+set listchars=tab:→\ ,trail:·,eol:↲,nbsp:·
 highlight SpecialKey ctermfg=234 guifg=234
 highlight NonText ctermfg=234 guifg=234
 
