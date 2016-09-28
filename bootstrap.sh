@@ -52,6 +52,7 @@ esac
 if [ ! -d "$HOME/.slimzsh" ]; then
     git clone --recursive https://github.com/changs/slimzsh.git ~/.slimzsh
 fi
+install_dotfile "$HOME/.dotfiles/zsh/aliases.zsh.local" "$HOME/.slimzsh/aliases.zsh.local"
 
 source ~/.zshrc
 cd "$HOME"

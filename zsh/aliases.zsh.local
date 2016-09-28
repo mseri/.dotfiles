@@ -1,0 +1,29 @@
+alias 'ls'='ls --color=auto'
+alias 'where'='rg -p'  #'grep -nrw'
+
+# make path and enter
+take() { mkdir -p "$1" && cd "$1" }
+
+# draw a horizontal line
+function rule {
+if [ -z "$1" ]
+then
+  V="-"
+else
+  V="$1"
+fi
+
+V=$V bash -c 'printf -v _hr "%*s" $(tput cols) && echo ${_hr// /${V--}}'
+}
+
+# tmux
+alias tma='tmux attach -d -t'
+alias tmn='tmux new -s $(basename $(pwd))'
+alias tml='tmux list-sessions'
+
+alias sshuttle="sshuttle --dns -vvr citrix-gate 10.0.0.0/8 -x 10.0.2.0/24"
+
+alias dockerize='docker run -i -t --dns 10.80.16.125 -v `pwd`:/mnt lindig/xs-shipyard'
+alias mounteddiein='sshfs marcellos@eddie:/local/scratch/mseri'
+alias mountdt21='sshfs root@dt21:/'
+alias pip-upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U --user"
