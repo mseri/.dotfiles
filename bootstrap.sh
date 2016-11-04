@@ -39,7 +39,7 @@ install_dotfile "$HOME/.dotfiles/nvim/init.vim" "$HOME/.config/nvim/init.vim"
 install_dotfile "$HOME/.dotfiles/terminator" "$HOME/.config/terminator/config"
 install_dotfile "$HOME/.dotfiles/ssh/config" "$HOME/.ssh/config"
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
-install_dotfile "$HOME/.dotfiles/zsh/.zshrc" "$HOME/.zshrc"
+install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
 
 # OS specific config
 case "$OSTYPE" in
@@ -54,6 +54,6 @@ if [ ! -d "$HOME/.slimzsh" ]; then
 fi
 install_dotfile "$HOME/.dotfiles/zsh/aliases.zsh.local" "$HOME/.slimzsh/aliases.zsh.local"
 
-source ~/.zshrc
+echo "Remember to run source ~/.zshrc to refresh zsh configuration"
 cd "$HOME"
-echo "Initalisation complete!"
+echo "Initalization complete!"
