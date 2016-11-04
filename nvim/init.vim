@@ -42,6 +42,74 @@ Plug 'eagletmt/neco-ghc'
 call plug#end()
 filetype plugin indent on
 
+"""""" Aesthetic """"""
+" Enable use of 256 colours (see
+" https://github.com/guns/xterm-color-table.vim)
+set t_Co=256
+" Enable syntax colouring
+syntax on
+" Always show status bar
+set laststatus=2
+" Let plugins show effects after 500ms, not 4s
+set updatetime=500
+" Highlight cursor line
+set cursorline
+" Show line numbers
+"set number
+
+" highlight tabs spaces and newlines
+set list
+set listchars=tab:→\ ,trail:·,eol:↲,nbsp:·
+highlight SpecialKey ctermfg=234 guifg=234
+highlight NonText ctermfg=234 guifg=234
+
+" hint to keep lines short
+" highlight the 80th column, and the space after the 100th one
+" using a very dark grey color
+execute "set colorcolumn=81," . join(range(101,500),',')
+highlight ColorColumn ctermbg=233 guibg=233
+
+" Use spaces for tabs, <C-V><Tab> to actually instert a tab
+set autoindent
+set smartindent
+set cindent
+set tabstop=2 shiftwidth=4 softtabstop=0
+"set expandtab
+set expandtab
+
+
+""""""" Keybindings """""""
+" Set up leaders
+let mapleader=","
+let maplocalleader="\\"
+
+" paste fix for osx
+nnoremap <F2> :set invpaste paste?<cr>
+set pastetoggle=<F2>
+
+" change indent in visual mode
+vnoremap < <gv
+vnoremap > >gv
+
+" clear search highlights
+noremap <leader><space> :noh<CR>
+
+
+"""""" Theme """"""
+"let g:airline_solarized_bg="dark"
+"color solarized
+
+set background=dark
+"colorscheme PaperColor
+
+let g:airline_theme='PaperColor'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" Use ag instead of ack
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+"""""" The Rest """"""
 set omnifunc=syntaxcomplete#Complete
 
 """""" OCaml Merlin (opam install merlin) """"""
@@ -87,71 +155,6 @@ let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
 
-"""""" Aesthetic """"""
-" Enable use of 256 colours (see
-" https://github.com/guns/xterm-color-table.vim)
-set t_Co=256
-" Enable syntax colouring
-syntax on
-" Always show status bar
-set laststatus=2
-" Let plugins show effects after 500ms, not 4s
-set updatetime=500
-" Highlight cursor line
-set cursorline
-" Show line numbers
-"set number
-
-" highlight tabs spaces and newlines
-set list
-set listchars=tab:→\ ,trail:·,eol:↲,nbsp:·
-highlight SpecialKey ctermfg=234 guifg=234
-highlight NonText ctermfg=234 guifg=234
-
-" hint to keep lines short
-" highlight the 80th column, and the space after the 100th one
-" using a very dark grey color
-execute "set colorcolumn=81," . join(range(101,500),',')
-highlight ColorColumn ctermbg=233 guibg=233
-
-" Use spaces for tabs, <C-V><Tab> to actually instert a tab
-set autoindent
-set smartindent
-set cindent
-set tabstop=2 shiftwidth=4 softtabstop=0
-set expandtab
-
-
-""""""" Keybindings """""""
-" Set up leaders
-let mapleader=","
-let maplocalleader="\\"
-
-" paste fix for osx
-nnoremap <F2> :set invpaste paste?<cr>
-set pastetoggle=<F2>
-
-" change indent in visual mode
-vnoremap < <gv
-vnoremap > >gv
-
-" clear search highlights
-noremap <leader><space> :noh<CR>
-
-
-"""""" Theme """"""
-"let g:airline_solarized_bg="dark"
-"color solarized
-
-set background=dark
-"colorscheme PaperColor
-
-let g:airline_theme='PaperColor'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-
-" Use ag instead of ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 """""" rust racer """"""
@@ -191,7 +194,8 @@ au FileType erlang setl sw=4 sts=4 ts=4 expandtab
 au FileType haskell setl sw=4 sts=4 ts=4 expandtab
 au FileType html setl sw=4 sts=4 ts=4 expandtab
 au FileType javascript setl sw=4 sts=4 ts=4 tw=0 wrapmargin=0 expandtab
-au FileType ocaml setl sw=2 sts=2 ts=2 tw=0 wrapmargin=0 expandtab
+" OCaml is set above to ocp-indent
+"au FileType ocaml setl sw=2 sts=2 ts=2 tw=0 wrapmargin=0 expandtab
 au FileType python setl sw=4 sts=4 ts=4 expandtab
 au FileType ruby setl sw=4 sts=4 ts=4 expandtab
 au FileType sh setl sw=4 sts=4 ts=4 expandtab
