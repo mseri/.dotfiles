@@ -1,6 +1,6 @@
 [global_config]
-  borderless = True
-  enabled_plugins = ,
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler
+  geometry_hinting = False
   title_font = Roboto Mono for Powerline 12
   title_hide_sizetext = True
   title_transmit_bg_color = "#00c800"
@@ -56,6 +56,48 @@
       profile = default
       type = Terminal
       uuid = ef906fd4-01f3-4be4-a2bf-48ed7e0b4d37
+  [[splitview]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = bc191b15-4040-4d8b-8579-6c363126a333
+      last_active_window = True
+      maximised = False
+      order = 0
+      parent = ""
+      position = 1914:90
+      size = 1113, 753
+      title = ~
+      type = Window
+    [[[child1]]]
+      order = 0
+      parent = child0
+      position = 555
+      ratio = 0.5
+      type = HPaned
+    [[[child3]]]
+      order = 1
+      parent = child1
+      position = 375
+      ratio = 0.5
+      type = VPaned
+    [[[terminal2]]]
+      order = 0
+      parent = child1
+      profile = default
+      type = Terminal
+      uuid = bc191b15-4040-4d8b-8579-6c363126a333
+    [[[terminal4]]]
+      order = 0
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = b0f8c460-a938-4e41-a0ff-05bf774d82d2
+    [[[terminal5]]]
+      order = 1
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = e906bf22-f7f4-4d6a-832b-a1d29a2cb99a
   [[vim-column]]
     [[[child0]]]
       fullscreen = False

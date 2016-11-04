@@ -23,8 +23,8 @@
         "**/*.{o,opt,native,annot,cm*,mll}": true
     },
 
-    "ocaml.merlinPath": "/home/mseri/.opam/system/bin/ocamlmerlin",
-    "ocaml.ocpIndentPath": "/home/mseri/.opam/system/bin/ocp-indent",
+    "ocaml.merlinPath": "/home/marcellos/.opam/4.02.3/bin/ocamlmerlin",
+    "ocaml.ocpIndentPath": "/home/marcellos/.opam/4.02.3/bin/ocp-indent",
 
     "extensions.autoUpdate": true,
     "telemetry.enableTelemetry": false
