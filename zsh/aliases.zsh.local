@@ -27,5 +27,5 @@ alias dockerize='docker run -i -t --rm --dns 10.80.16.125 -v `pwd`:/mnt lindig/x
 alias mounteddiein='sshfs marcellos@eddie:/local/scratch/mseri'
 alias mountdt21='sshfs root@dt21:/'
 alias pip-upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U --user"
-alias docker-images-cleanup="docker rmi `docker images --filter 'dangling=true' -q --no-trunc`"
-alias docker-containers-cleanup="docker rm `docker ps --filter 'status=exited' -q --no-trunc`"
+alias docker-images-cleanup="docker images --filter 'dangling=true' -q --no-trunc | xargs docker rmi"
+alias docker-containers-cleanup="docker ps --filter 'status=exited' -q --no-trunc | xargs docker rm"
