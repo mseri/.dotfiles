@@ -34,6 +34,7 @@ git pull
 # Add links to these files
 install_dotfile "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig"
 install_dotfile "$HOME/.dotfiles/git/gitignore_global" "$HOME/.gitignore_global"
+install_dotfile "$HOME/.dotfiles/i3/config" "$HOME/.config/i3/config"
 install_dotfile "$HOME/.dotfiles/tmux/tmux.conf" "$HOME/.tmux.conf"
 install_dotfile "$HOME/.dotfiles/nvim/init.vim" "$HOME/.config/nvim/init.vim"
 install_dotfile "$HOME/.dotfiles/Code/settings.json" "$HOME/.config/Code/User/settings.json"
