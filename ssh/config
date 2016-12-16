@@ -8,7 +8,7 @@ Host eddie
 
 
 # Test machines
-Host dt* st* *.citrite.net
+Host dt* st* *.xenrt.citrite.net
     User root
     PreferredAuthentications password
     UserKnownHostsFile /dev/null
