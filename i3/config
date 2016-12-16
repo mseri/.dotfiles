@@ -168,3 +168,7 @@ bindsym $mod+Shift+z move container to workspace back_and_forth
 bindsym $mod+Control+Right workspace next
 bindsym $mod+Control+Left workspace prev
 
+# Move workspaces between screens
+bindsym $mod+Shift+greater move workspace to output left
+bindsym $mod+Shift+less move workspace to output right
+
