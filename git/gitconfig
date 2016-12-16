@@ -12,9 +12,16 @@
 [commit]
     signOff = true
 [alias]
-    st = status -sb
+    st = status
     co = checkout
     gl = log --graph --abbrev-commit --oneline --decorate
+    gr = log --oneline --graph --decorate --branches --remotes --abbrev-commit
+    chg = log --oneline --no-merges
+    ckb = checkout -b
+    br = branch
+    cs = commit -s
+    csa = commit -as
+    last = log -1 HEAD
 [github]
     user = mseri
 [core]
