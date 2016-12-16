@@ -10,8 +10,16 @@
   go_left = <Shift><Alt>Left
   go_right = <Shift><Alt>Right
   go_up = <Shift><Alt>Up
-  split_horiz = <Primary><Shift>underscore
-  split_vert = <Primary><Shift>bar
+  group_all = <Primary><Shift>g
+  group_tab = <Primary><Shift>t
+  insert_number = None
+  insert_padded = None
+  rotate_ccw = None
+  rotate_cw = None
+  split_horiz = <Primary><Shift>o
+  split_vert = <Primary><Shift>e
+  ungroup_all = <Primary><Alt>g
+  ungroup_tab = <Primary><Alt>t
 [layouts]
   [[default]]
     [[[child0]]]
