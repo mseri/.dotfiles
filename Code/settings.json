@@ -27,5 +27,6 @@
     "ocaml.ocpIndentPath": "/home/marcellos/.opam/4.02.3/bin/ocp-indent",
 
     "extensions.autoUpdate": true,
-    "telemetry.enableTelemetry": false
+    "telemetry.enableTelemetry": false,
+    "vsicons.dontShowNewVersionMessage": true
 }
