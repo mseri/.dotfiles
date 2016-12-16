@@ -12,7 +12,7 @@
 [commit]
     signOff = true
 [alias]
-    st = status
+    st = status -sb
     co = checkout
     gl = log --graph --abbrev-commit --oneline --decorate
     gr = log --oneline --graph --decorate --branches --remotes --abbrev-commit

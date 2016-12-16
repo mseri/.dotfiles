@@ -43,12 +43,16 @@ zle -N down-line-or-beginning-search
 # override the default with slimzsh (changs/slimzsh)
 source "$HOME/.slimzsh/slim.zsh"
 
-# thoraway shh hosts conf
-export SSH_THROWAWAY_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin"
+export EDITOR="nvim"
+
 # OPAM configuration
 . /home/mseri/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
+# Go configuration
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+
+# thoraway shh hosts conf
+export SSH_THROWAWAY_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
