@@ -14,8 +14,8 @@ endif
 
 filetype off
 call plug#begin('~/.nvim/plugged')
-Plug 'bling/vim-airline'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 "Plug 'altercation/vim-colors-solarized'
 
 Plug 'scrooloose/nerdtree'
@@ -102,7 +102,7 @@ noremap <leader><space> :noh<CR>
 set background=dark
 "colorscheme PaperColor
 
-let g:airline_theme='PaperColor'
+let g:airline_theme='papercolor'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
@@ -207,4 +207,6 @@ nnoremap <C-l> :NERDTreeFind<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.swp$', '\.a$', '\.cmxa$', '\.o$', '\.spit$', '\.spot$', '\.cmi$', '\.cmx$', '\.annot$', "\.git$"]
 
+" fix for neovim/issues/#5990
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
 
