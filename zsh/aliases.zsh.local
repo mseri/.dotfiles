@@ -26,6 +26,8 @@ alias sshuttle="sshuttle --dns -vvr citrix-gate 10.0.0.0/8 -x 10.0.2.0/24"
 alias dockerize='docker run -i -t --rm --dns 10.80.16.125 -v `pwd`:/mnt lindig/xs-shipyard'
 alias mounteddiein='sshfs marcellos@eddie:/local/scratch/mseri'
 alias mountdt21='sshfs root@dt21:/'
+
 alias pip-upgrade="pip freeze --user | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U --user"
+
 alias docker-images-cleanup="docker images --filter 'dangling=true' -q --no-trunc | xargs docker rmi"
 alias docker-containers-cleanup="docker ps --filter 'status=exited' -q --no-trunc | xargs docker rm"

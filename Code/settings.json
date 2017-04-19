@@ -1,7 +1,8 @@
 // Place your settings in this file to overwrite the default settings
 {
-    "editor.fontFamily": "Fira Mono for Powerline",
-    "editor.fontSize": 15,
+    "editor.fontFamily": "Iosevka",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16,
     "editor.rulers": [81, 101],
     "editor.renderWhitespace": "boundary",
     
@@ -23,10 +24,13 @@
         "**/*.{o,opt,native,annot,cm*,mll}": true
     },
 
-    "ocaml.merlinPath": "/home/marcellos/.opam/4.02.3/bin/ocamlmerlin",
-    "ocaml.ocpIndentPath": "/home/marcellos/.opam/4.02.3/bin/ocp-indent",
+    "ocaml.merlinPath": "/home/marcellos/.opam/system/bin/ocamlmerlin",
+    "ocaml.ocpIndentPath": "/home/marcellos/.opam/system/bin/ocp-indent",
 
     "extensions.autoUpdate": true,
     "telemetry.enableTelemetry": false,
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.colorTheme": "Chromodynamics",
+    "workbench.iconTheme": "vscode-icons",
+    "vsicons.projectDetection.autoReload": true
 }

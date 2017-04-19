@@ -2,8 +2,11 @@ Host dt21
     HostName dt21.uk.xensource.com
     User root
 
-Host eddie
-    HostName eddie
+Host ganymede
+    HostName ganymede.uk.xensource.com
+    User marcellos
+
+Host eddie*
     User marcellos
 
 
