@@ -166,8 +166,9 @@ let g:racer_cmd = "/Users/marcelloseri/.cargo/bin/racer"
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 set completeopt=menuone,noinsert,noselect
-" let g:deoplete#disable_auto_complete = 1
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+let g:deoplete#disable_auto_complete = 1
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
 
 " ocaml fix for deoplete
 let g:deoplete#omni_patterns = {}
