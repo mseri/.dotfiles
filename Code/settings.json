@@ -6,6 +6,8 @@
     "editor.rulers": [81, 101],
     "editor.renderWhitespace": "boundary",
     
+    "search.useRipgrep": true,
+
     "files.exclude": {
         "**/_build": true,
         "**/build": true,
