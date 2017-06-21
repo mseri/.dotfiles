@@ -38,10 +38,7 @@
     "workbench.colorTheme": "Chromodynamics",
     "workbench.iconTheme": "vscode-icons",
     "vsicons.projectDetection.autoReload": true,
-    "[cpp]": {
-        "editor.quickSuggestions": false
-    },
-    "[c]": {
-        "editor.quickSuggestions": false
-    }
+    "git.confirmSync": false,
+    "workbench.activityBar.visible": true,
+    "editor.minimap.enabled": false
 }

@@ -13,33 +13,86 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 filetype off
-call plug#begin('~/.nvim/plugged')
+
+if executable("opam")
+  let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+
+  let g:ocamlocpindent = g:opamshare . "/ocp-indent/vim"
+  if !isdirectory(g:ocamlocpindent)
+    echom "Couldn't find ocp-indent in " . g:ocamlocpindent
+    let g:ocaml_has_ocpindent = 0
+  else
+    let g:ocaml_has_ocpindent = 1
+  endif
+
+  let g:ocamlmerlin =  g:opamshare . "/merlin/vim"
+  if !isdirectory(g:ocamlmerlin)
+    echom "Couldn't find merlin in " . g:ocamlmerlin
+    let g:ocaml_has_merlin = 0
+  else
+    let g:ocaml_has_merlin = 1
+  endif
+endif
+
+call plug#begin('~/.cache/vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'altercation/vim-colors-solarized'
 
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/syntastic'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'benekastah/neomake'
 Plug 'thirtythreeforty/lessspace.vim'
 
 Plug 'klen/python-mode'
-"Plug 'ElmCast/elm-vim'
-"Plug 'phildawes/racer'
-"Plug 'rust-lang/rust.vim'
-"Plug 'leafgarland/typescript-vim'
-"Plug 'elixir-lang/vim-elixir'
-"Plug 'isRuslan/vim-es6'
-Plug 'plasticboy/vim-markdown'
-"Plug 'vim-ruby/vim-ruby'
-Plug 'pangloss/vim-javascript'
-"Plug 'cespare/vim-toml'
-"Plug 'vim-scripts/freefem.vim'
-Plug 'eagletmt/neco-ghc'
+
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ervandew/supertab'
+Plug 'godlygeek/tabular'
+Plug 'luochen1990/rainbow'
+Plug 'rgrinberg/vim-ocaml'
+Plug 'w0rp/ale'
+Plug g:ocamlocpindent, { 'for': 'ocaml' }
+Plug g:ocamlmerlin, { 'for': 'ocaml' }
+
 call plug#end()
+
+function FT_ocaml()
+    setlocal textwidth=80
+    setlocal colorcolumn=80
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal expandtab
+    setlocal smarttab
+
+    if g:ocaml_has_merlin
+      nmap <LocalLeader>d :MerlinDocument<CR>
+      nmap <LocalLeader>gd :MerlinILocate<CR>
+      nmap <LocalLeader>m :MerlinDestruct<CR>
+      nmap <LocalLeader>o :MerlinOutline<CR>
+      nmap <LocalLeader>r <Plug>(MerlinRename)
+      nmap <LocalLeader>R <Plug>(MerlinRenameAppend)
+      nmap <LocalLeader>T :MerlinYankLatestType<CR>
+    endif
+
+    vmap a- :Tabularize /-><CR>
+    vmap a: :Tabularize /:<CR>
+
+    " Load topkg in Merlin when editing pkg/pkg.ml
+    if expand("%:p") =~# "pkg\/pkg\.ml$"
+      call merlin#Use("topkg")
+    endif
+
+    call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+endfunction
+
+au FileType ocaml call FT_ocaml()
+au BufRead,BufNewFile *.ml,*.mli compiler ocaml
+
+autocmd BufNewFile,BufRead jbuild setlocal filetype=scheme
+autocmd BufNewFile,BufRead jbuild :RainbowToggle
+
+let g:rainbow_active = 0
+let g:ale_lint_on_text_changed = 'never'
+
 filetype plugin indent on
 
 """""" Aesthetic """"""
@@ -109,77 +162,21 @@ let g:airline#extensions#tabline#enabled = 1
 " Use ag instead of ack
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-"""""" The Rest """"""
-set omnifunc=syntaxcomplete#Complete
 
-"""""" OCaml Merlin (opam install merlin) """"""
-let g:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
-execute 'set rtp+=' . g:opamshare . '/merlin/vim'
-execute 'helptags ' . g:opamshare . '/merlin/vim/doc/'
-
-
-"""""" OCaml ocp-indent and ocp-index (opam install ocp-index ocp-indent) """"""
-execute 'autocmd FileType ocaml source' . g:opamshare . '/ocp-indent/vim/indent/ocaml.vim'
-execute 'set rtp+=' . g:opamshare . 'ocp-index/vim'
+""""""" Syntastic """"""
+"let g:syntastic_enable_signs = 1
+"let g:syntastic_error_symbol = '✗'
+"let g:syntastic_warning_symbol = '⚠'
+"" (pip install pylint)
+"let g:syntastic_python_checkers = ['pylint']
+"let g:syntastic_ocaml_checkers = ['merlin']
+"let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
 
 
-"""""" Other OCaml specifics """"""
-" \s : switches between the .ml and .mli file
-" \c : comments the current line / selection (\C to uncomment)
-" %  : jumps to matching let/in, if/then, etc (see :h matchit-install)
-" \t : tells you the type of the thing under the cursor (if you compiled with -annot)
-au BufRead,BufNewFile *.ml,*.mli compiler ocaml
+""""""" rust racer """"""
+"set hidden
+"let g:racer_cmd = "/Users/marcelloseri/.cargo/bin/racer"
 
-
-"""""" Haskell autocomplete """"""
-" Disable haskell-vim omnifunc
-let g:haskellmode_completion_ghc = 0
-
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-autocmd FileType haskell setlocal nofoldenable
-autocmd FileType haskell setlocal conceallevel=0
-autocmd FileType haskell compiler hlint
-
-nnoremap <leader>h= :execute "Tabularize haskell_bindings"<CR>
-nnoremap <leader>ht :execute "GhcModType!"<CR>
-nnoremap <leader>hT :execute "GhcModTypeInsert!"<CR>
-nnoremap <leader>hc :execute "GhcModTypeClear"<CR>
-
-
-"""""" Syntastic """"""
-let g:syntastic_enable_signs = 1
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-" (pip install pylint)
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_ocaml_checkers = ['merlin']
-let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
-
-
-
-"""""" rust racer """"""
-set hidden
-let g:racer_cmd = "/Users/marcelloseri/.cargo/bin/racer"
-
-
-"""""" deoplete """"""
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-set completeopt=menuone,noinsert,noselect
-let g:deoplete#disable_auto_complete = 1
-" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-" inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
-
-" ocaml fix for deoplete
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni_patterns.ocaml = '[^ ,;\t\[()\]]'
-
-" deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <C-c> <C-x><C-o>
-
-"""""" neomake on <C-b> """"""
-nnoremap <C-b> :w<cr>:Neomake<cr>
 
 " Filetype detection.
 " au BufRead,BufNewFile *xensource.log* set filetype=messages
