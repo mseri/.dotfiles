@@ -21,7 +21,7 @@ alias tma='tmux attach -d -t'
 alias tmn='tmux new -s $(basename $(pwd))'
 alias tml='tmux list-sessions'
 
-alias sshuttle="sshuttle --dns -vvr citrix-gate 10.0.0.0/8 -x 10.0.2.0/24"
+#alias sshuttle="sshuttle --dns -vvr citrix-gate 10.0.0.0/8 -x 10.0.2.0/24"
 
 alias dockerize='docker run -i -t --rm --dns 10.80.16.125 -v `pwd`:/mnt lindig/xs-shipyard'
 alias mounteddiein='sshfs marcellos@eddie:/local/scratch/mseri'
