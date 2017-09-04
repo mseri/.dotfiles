@@ -208,3 +208,6 @@ let NERDTreeIgnore=['\.swp$', '\.a$', '\.cmxa$', '\.o$', '\.spit$', '\.spot$', '
 " fix for neovim/issues/#5990
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
 
+
+" show live search/replace
+set inccommand=nosplit
