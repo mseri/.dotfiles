@@ -44,6 +44,8 @@ Plug 'thirtythreeforty/lessspace.vim'
 
 Plug 'klen/python-mode'
 
+Plug 'rust-lang/rust.vim'
+
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
