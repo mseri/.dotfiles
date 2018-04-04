@@ -41,7 +41,6 @@ install_dotfile "$HOME/.dotfiles/Code/settings.json" "$HOME/.config/Code/User/se
 install_dotfile "$HOME/.dotfiles/terminator/config" "$HOME/.config/terminator/config"
 install_dotfile "$HOME/.dotfiles/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
 install_dotfile "$HOME/.dotfiles/ssh/config" "$HOME/.ssh/config"
-install_dotfile "$HOME/.dotfiles/spacemacs/spacemacs" "$HOME/.spacemacs"
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
 install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
 
@@ -57,6 +56,11 @@ if [ ! -d "$HOME/.slimzsh" ]; then
     git clone --recursive https://github.com/changs/slimzsh.git ~/.slimzsh
 fi
 install_dotfile "$HOME/.dotfiles/zsh/aliases.zsh.local" "$HOME/.slimzsh/aliases.zsh.local"
+
+if [ ! -d "$HOME/.emacs.d" ]; then
+    git clone https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
+fi
+install_dotfile "$HOME/.dotfiles/spacemacs/spacemacs" "$HOME/.spacemacs"
 
 echo "Remember to run source ~/.zshrc to refresh zsh configuration"
 cd "$HOME"
