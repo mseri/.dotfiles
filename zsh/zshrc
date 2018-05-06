@@ -2,6 +2,10 @@
 autoload -Uz promptinit
 promptinit
 
+if [  -d $(brew --prefix coreutils)/libexec/gnubin  ]; then
+    PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+fi
+
 setopt histignorealldups sharehistory nobeep
 
 # Use modern completion system
