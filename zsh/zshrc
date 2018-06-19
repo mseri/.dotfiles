@@ -2,7 +2,7 @@
 autoload -Uz promptinit
 promptinit
 
-setopt histignorealldups sharehistory
+setopt histignorealldups sharehistory nobeep
 
 # Use modern completion system
 autoload -Uz compinit
@@ -47,7 +47,7 @@ export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin"
 export EDITOR="nvim"
 
 # OPAM configuration
-. /home/mseri/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
 # Go configuration
 export GOPATH=$HOME/go
