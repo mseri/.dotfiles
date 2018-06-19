@@ -58,5 +58,4 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 # thoraway shh hosts conf
-export SSH_THROWAWAY_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-
+export PATH="$PATH:/Users/marcelloseri/Library/Python/3.6/bin"
