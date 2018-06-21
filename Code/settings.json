@@ -40,5 +40,8 @@
     "vsicons.projectDetection.autoReload": true,
     "git.confirmSync": false,
     "workbench.activityBar.visible": true,
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    }
 }
