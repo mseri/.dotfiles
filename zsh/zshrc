@@ -33,8 +33,6 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # override defaults with my custom configuration
 autoload -Uz run-help
 autoload -Uz run-help-git
-autoload -Uz run-help-svn
-autoload -Uz run-help-svk
 alias help=run-help
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -51,11 +49,12 @@ export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin"
 export EDITOR="nvim"
 
 # OPAM configuration
-. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+. $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+. $HOME/.opam/opam-init/env_hook.zsh > /dev/null 2> /dev/null || true
 
 # Go configuration
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+#export GOPATH=$HOME/go
+#export PATH=$PATH:$GOPATH/bin
 
 # thoraway shh hosts conf
 export PATH="$PATH:/Users/marcelloseri/Library/Python/3.6/bin"
