@@ -1,7 +1,7 @@
 " python support is needed for merlin
-let g:python_host_prog = '/usr/bin/python'
+let g:python_host_prog = '/usr/local/bin/python'
 " python3 support is needed for deoplete
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = '/usr/local/bin/python3'
 
 set nocompatible
 
@@ -17,21 +17,21 @@ filetype off
 if executable("opam")
   let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 
-  let g:ocamlocpindent = g:opamshare . "/ocp-indent/vim"
-  if !isdirectory(g:ocamlocpindent)
-    echom "Couldn't find ocp-indent in " . g:ocamlocpindent
-    let g:ocaml_has_ocpindent = 0
-  else
-    let g:ocaml_has_ocpindent = 1
-  endif
+"  let g:ocamlocpindent = g:opamshare . "/ocp-indent/vim"
+"  if !isdirectory(g:ocamlocpindent)
+"    echom "Couldn't find ocp-indent in " . g:ocamlocpindent
+"    let g:ocaml_has_ocpindent = 0
+"  else
+"    let g:ocaml_has_ocpindent = 1
+"  endif
 
-  let g:ocamlmerlin =  g:opamshare . "/merlin/vim"
-  if !isdirectory(g:ocamlmerlin)
-    echom "Couldn't find merlin in " . g:ocamlmerlin
-    let g:ocaml_has_merlin = 0
-  else
-    let g:ocaml_has_merlin = 1
-  endif
+"  let g:ocamlmerlin =  g:opamshare . "/merlin/vim"
+"  if !isdirectory(g:ocamlmerlin)
+"    echom "Couldn't find merlin in " . g:ocamlmerlin
+"    let g:ocaml_has_merlin = 0
+"  else
+"    let g:ocaml_has_merlin = 1
+"  endif
 endif
 
 call plug#begin('~/.cache/vim/plugged')
@@ -42,19 +42,24 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'thirtythreeforty/lessspace.vim'
 
-Plug 'klen/python-mode'
+"Plug 'klen/python-mode', { 'for': 'python' }
 
-Plug 'rust-lang/rust.vim'
+"Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
 Plug 'luochen1990/rainbow'
-Plug 'rgrinberg/vim-ocaml'
+"Plug 'rgrinberg/vim-ocaml'
 Plug 'w0rp/ale'
 Plug g:ocamlocpindent, { 'for': 'ocaml' }
 Plug g:ocamlmerlin, { 'for': 'ocaml' }
 
+Plug 'ajmwagar/vim-deus'
+
+"Plug 'https://framagit.org/tyreunom/coquille.git', { 'for': 'coq' }
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'cespare/vim-toml'
 call plug#end()
 
 function FT_ocaml()
@@ -65,25 +70,25 @@ function FT_ocaml()
     setlocal expandtab
     setlocal smarttab
 
-    if g:ocaml_has_merlin
-      nmap <LocalLeader>d :MerlinDocument<CR>
-      nmap <LocalLeader>gd :MerlinILocate<CR>
-      nmap <LocalLeader>m :MerlinDestruct<CR>
-      nmap <LocalLeader>o :MerlinOutline<CR>
-      nmap <LocalLeader>r <Plug>(MerlinRename)
-      nmap <LocalLeader>R <Plug>(MerlinRenameAppend)
-      nmap <LocalLeader>T :MerlinYankLatestType<CR>
-    endif
+"    if g:ocaml_has_merlin
+"      nmap <LocalLeader>d :MerlinDocument<CR>
+"      nmap <LocalLeader>gd :MerlinILocate<CR>
+"      nmap <LocalLeader>m :MerlinDestruct<CR>
+"      nmap <LocalLeader>o :MerlinOutline<CR>
+"      nmap <LocalLeader>r <Plug>(MerlinRename)
+"      nmap <LocalLeader>R <Plug>(MerlinRenameAppend)
+"      nmap <LocalLeader>T :MerlinYankLatestType<CR>
+"    endif
 
-    vmap a- :Tabularize /-><CR>
-    vmap a: :Tabularize /:<CR>
+"    vmap a- :Tabularize /-><CR>
+"    vmap a: :Tabularize /:<CR>
 
-    " Load topkg in Merlin when editing pkg/pkg.ml
-    if expand("%:p") =~# "pkg\/pkg\.ml$"
-      call merlin#Use("topkg")
-    endif
+"    " Load topkg in Merlin when editing pkg/pkg.ml
+"    if expand("%:p") =~# "pkg\/pkg\.ml$"
+"      call merlin#Use("topkg")
+"    endif
 
-    call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+"    call SuperTabSetDefaultCompletionType("<c-x><c-o>")
 endfunction
 
 au FileType ocaml call FT_ocaml()
@@ -94,6 +99,7 @@ autocmd BufNewFile,BufRead jbuild :RainbowToggle
 
 let g:rainbow_active = 0
 let g:ale_lint_on_text_changed = 'never'
+call ale#linter#Define('ocaml', { 'name': 'ocaml-lsp', 'lsp': 'stdio', 'executable': 'ocamllsp', 'command': '%e', 'project_root': function('ale#handlers#ols#GetProjectRoot') })
 
 filetype plugin indent on
 
@@ -156,8 +162,12 @@ noremap <leader><space> :noh<CR>
 
 set background=dark
 "colorscheme PaperColor
+"colorscheme Luna
+"
+colorscheme deus
+let g:deus_termcolors=256
 
-let g:airline_theme='papercolor'
+let g:airline_theme='deus'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
@@ -177,12 +187,12 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 """"""" rust racer """"""
 "set hidden
-"let g:racer_cmd = "/Users/marcelloseri/.cargo/bin/racer"
 
 
 " Filetype detection.
 " au BufRead,BufNewFile *xensource.log* set filetype=messages
 au BufRead {*xensource.log*,*.log,messages*} setl ft=messages
+au BufRead {*.v} setl ft=coq
 
 " Filetype-specific settings.
 au FileType c setl sw=4 sts=4 ts=4 expandtab
