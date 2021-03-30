@@ -1,68 +1,14 @@
-# Set up the prompt
-autoload -Uz promptinit
-promptinit
-
-setopt histignorealldups sharehistory nobeep
-
-# Use modern completion system
-autoload -Uz compinit
-compinit
-
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-#eval "$(dircolors -b)"
-#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-# osx specific setting
-export CLICOLOR=1
-zstyle ':completion:*:default' list-colors ''
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
-zstyle ':completion:*' rehash true
-
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-# override defaults with my custom configuration
-autoload -Uz run-help
-autoload -Uz run-help-git
-autoload -Uz run-help-svn
-autoload -Uz run-help-svk
-alias help=run-help
-
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-
-[[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
-[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
-
-# override the default with slimzsh (changs/slimzsh)
-source "$HOME/.slimzsh/slim.zsh"
-
-export PATH="$HOME/.local/bin:$PATH"
-export EDITOR="nvim"
-
-# OPAM configuration
-. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-
-if [ -f "$(which patdiff-git-wrapper)" ]; then
-    export GIT_EXTERNAL_DIFF=$(which patdiff-git-wrapper)
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# thoraway shh hosts conf
-export SSH_THROWAWAY_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
-export TERM_ITALICS=true
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# PATH="/Users/mseri/perl5/bin${PATH:+:${PATH}}"; export PATH;
-# PERL5LIB="/Users/mseri/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT="/Users/mseri/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \"/Users/mseri/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=/Users/mseri/perl5"; export PERL_MM_OPT;
+source "$HOME/.custom.zsh"
+
