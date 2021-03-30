@@ -39,10 +39,11 @@ install_dotfile "$HOME/.dotfiles/git/gitignore_global" "$HOME/.gitignore_global"
 install_dotfile "$HOME/.dotfiles/nvim/init.vim" "$HOME/.config/nvim/init.vim"
 #install_dotfile "$HOME/.dotfiles/Code/settings.json" "$HOME/.config/Code/User/settings.json"
 #install_dotfile "$HOME/.dotfiles/terminator/config" "$HOME/.config/terminator/config"
-install_dotfile "$HOME/.dotfiles/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+#install_dotfile "$HOME/.dotfiles/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
 #install_dotfile "$HOME/.dotfiles/ssh/config" "$HOME/.ssh/config"
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
 install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
+install_dotfile "$HOME/.dotfiles/zsh/custom.zsh" "$HOME/.custom.zsh"
 
 # OS specific config
 case "$OSTYPE" in
@@ -52,15 +53,14 @@ case "$OSTYPE" in
         ;;
 esac
 
-if [ ! -d "$HOME/.slimzsh" ]; then
-    git clone --recursive https://github.com/changs/slimzsh.git ~/.slimzsh
+if [ ! -d "$HOME/powerlevel10k" ]; then
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 fi
-install_dotfile "$HOME/.dotfiles/zsh/aliases.zsh.local" "$HOME/.slimzsh/aliases.zsh.local"
 
-if [ ! -d "$HOME/.emacs.d" ]; then
-    git clone https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
-fi
-install_dotfile "$HOME/.dotfiles/spacemacs/spacemacs" "$HOME/.spacemacs"
+#if [ ! -d "$HOME/.emacs.d" ]; then
+#    git clone https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
+#fi
+#install_dotfile "$HOME/.dotfiles/spacemacs/spacemacs" "$HOME/.spacemacs"
 
 echo "Remember to run source ~/.zshrc to refresh zsh configuration"
 cd "$HOME"
