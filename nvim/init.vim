@@ -1,8 +1,3 @@
-" python support is needed for merlin
-let g:python_host_prog = '/usr/local/bin/python'
-" python3 support is needed for deoplete
-let g:python3_host_prog = '/usr/local/bin/python3'
-
 set nocompatible
 
 " install plug and the plugins if not yet installed
@@ -14,25 +9,6 @@ endif
 
 filetype off
 
-if executable("opam")
-  let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-
-"  let g:ocamlocpindent = g:opamshare . "/ocp-indent/vim"
-"  if !isdirectory(g:ocamlocpindent)
-"    echom "Couldn't find ocp-indent in " . g:ocamlocpindent
-"    let g:ocaml_has_ocpindent = 0
-"  else
-"    let g:ocaml_has_ocpindent = 1
-"  endif
-
-"  let g:ocamlmerlin =  g:opamshare . "/merlin/vim"
-"  if !isdirectory(g:ocamlmerlin)
-"    echom "Couldn't find merlin in " . g:ocamlmerlin
-"    let g:ocaml_has_merlin = 0
-"  else
-"    let g:ocaml_has_merlin = 1
-"  endif
-endif
 
 call plug#begin('~/.cache/vim/plugged')
 Plug 'vim-airline/vim-airline'
@@ -62,41 +38,6 @@ Plug 'ajmwagar/vim-deus'
 Plug 'cespare/vim-toml'
 call plug#end()
 
-function FT_ocaml()
-    setlocal textwidth=80
-    setlocal colorcolumn=80
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal expandtab
-    setlocal smarttab
-
-"    if g:ocaml_has_merlin
-"      nmap <LocalLeader>d :MerlinDocument<CR>
-"      nmap <LocalLeader>gd :MerlinILocate<CR>
-"      nmap <LocalLeader>m :MerlinDestruct<CR>
-"      nmap <LocalLeader>o :MerlinOutline<CR>
-"      nmap <LocalLeader>r <Plug>(MerlinRename)
-"      nmap <LocalLeader>R <Plug>(MerlinRenameAppend)
-"      nmap <LocalLeader>T :MerlinYankLatestType<CR>
-"    endif
-
-"    vmap a- :Tabularize /-><CR>
-"    vmap a: :Tabularize /:<CR>
-
-"    " Load topkg in Merlin when editing pkg/pkg.ml
-"    if expand("%:p") =~# "pkg\/pkg\.ml$"
-"      call merlin#Use("topkg")
-"    endif
-
-"    call SuperTabSetDefaultCompletionType("<c-x><c-o>")
-endfunction
-
-au FileType ocaml call FT_ocaml()
-au BufRead,BufNewFile *.ml,*.mli compiler ocaml
-
-autocmd BufNewFile,BufRead jbuild setlocal filetype=scheme
-autocmd BufNewFile,BufRead jbuild :RainbowToggle
-
 let g:rainbow_active = 0
 let g:ale_lint_on_text_changed = 'never'
 call ale#linter#Define('ocaml', { 'name': 'ocaml-lsp', 'lsp': 'stdio', 'executable': 'ocamllsp', 'command': '%e', 'project_root': function('ale#handlers#ols#GetProjectRoot') })
@@ -119,10 +60,10 @@ set cursorline
 "set number
 
 " highlight tabs spaces and newlines
-set list
-set listchars=tab:→\ ,trail:·,eol:↲,nbsp:·
-highlight SpecialKey ctermfg=234 guifg=234
-highlight NonText ctermfg=234 guifg=234
+"set list
+"set listchars=tab:→\ ,trail:·,eol:↲,nbsp:·
+"highlight SpecialKey ctermfg=234 guifg=234
+"highlight NonText ctermfg=234 guifg=234
 
 " hint to keep lines short
 " highlight the 80th column, and the space after the 100th one
@@ -135,7 +76,6 @@ set autoindent
 set smartindent
 set cindent
 set tabstop=2 shiftwidth=4 softtabstop=0
-"set expandtab
 set expandtab
 
 
@@ -179,38 +119,10 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 "let g:syntastic_enable_signs = 1
 "let g:syntastic_error_symbol = '✗'
 "let g:syntastic_warning_symbol = '⚠'
-"" (pip install pylint)
 "let g:syntastic_python_checkers = ['pylint']
 "let g:syntastic_ocaml_checkers = ['merlin']
 "let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
 
-
-""""""" rust racer """"""
-"set hidden
-
-
-" Filetype detection.
-" au BufRead,BufNewFile *xensource.log* set filetype=messages
-au BufRead {*xensource.log*,*.log,messages*} setl ft=messages
-au BufRead {*.v} setl ft=coq
-
-" Filetype-specific settings.
-au FileType c setl sw=4 sts=4 ts=4 expandtab
-au FileType cmake setl sw=4 sts=4 ts=4 expandtab
-au FileType cpp setl sw=4 sts=4 ts=4 expandtab
-au FileType css setl sw=4 sts=4 ts=4 expandtab
-au FileType cucumber setl sw=4 sts=4 ts=4 expandtab
-au FileType erlang setl sw=4 sts=4 ts=4 expandtab
-au FileType haskell setl sw=4 sts=4 ts=4 expandtab
-au FileType html setl sw=4 sts=4 ts=4 expandtab
-au FileType javascript setl sw=4 sts=4 ts=4 tw=0 wrapmargin=0 expandtab
-" OCaml is set above to ocp-indent
-"au FileType ocaml setl sw=2 sts=2 ts=2 tw=0 wrapmargin=0 expandtab
-au FileType python setl sw=4 sts=4 ts=4 expandtab
-au FileType ruby setl sw=4 sts=4 ts=4 expandtab
-au FileType sh setl sw=4 sts=4 ts=4 expandtab
-au FileType vim setl sw=4 sts=4 ts=4 expandtab
-au FileType yaml setl sw=4 sts=4 ts=4 expandtab
 
 " NERDTree bits.
 nnoremap <C-l> :NERDTreeFind<CR>
@@ -219,7 +131,6 @@ let NERDTreeIgnore=['\.swp$', '\.a$', '\.cmxa$', '\.o$', '\.spit$', '\.spot$', '
 
 " fix for neovim/issues/#5990
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
-
 
 " show live search/replace
 set inccommand=nosplit

@@ -24,6 +24,7 @@ export TIMEFMT='%J    %U  user %S system %P cpu %*E total'$'\n'\
 'other page faults:         %R'
 
 export TERM_ITALICS=true
+export CLICOLOR=true
 
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR="nvim"
