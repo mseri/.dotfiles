@@ -43,7 +43,7 @@ install_dotfile "$HOME/.dotfiles/nvim/init.vim" "$HOME/.config/nvim/init.vim"
 #install_dotfile "$HOME/.dotfiles/ssh/config" "$HOME/.ssh/config"
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
 install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
-install_dotfile "$HOME/.dotfiles/zsh/custom.zsh" "$HOME/.custom.zsh"
+$install_dotfile "$HOME/.dotfiles/zsh/custom.zsh" "$HOME/.custom.zsh"
 
 # OS specific config
 case "$OSTYPE" in
@@ -54,7 +54,11 @@ case "$OSTYPE" in
 esac
 
 if [ ! -d "$HOME/powerlevel10k" ]; then
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.powerlevel10k
+fi
+
+if [ ! -d "$HOME/.fsd" ]; then
+    git clone https://github.com/zdharma/fast-syntax-highlighting ~/.fsd
 fi
 
 #if [ ! -d "$HOME/.emacs.d" ]; then
