@@ -1,31 +1,3 @@
-#### CUSTOM FUNCTIONS ####
-
-alias 'where'='rg -p'  #'grep -nrw'
-
-# make path and enter
-take() { mkdir -p "$1" && cd "$1" }
-
-# draw a horizontal line
-function rule {
-    if [ -z "$1" ]
-    then
-        V="-"
-    else
-        V="$1"
-    fi
-
-    V=$V bash -c 'printf -v _hr "%*s" $(tput cols) && echo ${_hr// /${V--}}'
-}
-
-#### TIME command format ####
-export TIMEFMT='%J    %U  user %S system %P cpu %*E total'$'\n'\
-'avg shared (code):         %X KB'$'\n'\
-'avg unshared (data/stack): %D KB'$'\n'\
-'total (sum):               %K KB'$'\n'\
-'max memory:                %K MB'$'\n'\
-'page faults from disk:     %F'$'\n'\
-'other page faults:         %R'
-
 #### HISTORY SETUP ####
 
 if [ -z $HISTFILE ]; then
@@ -105,7 +77,7 @@ fi
 
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
-#### Final Customizations ####
+#### MAIN ####
 
 export TERM_ITALICS=true
 export CLICOLOR=true
@@ -123,3 +95,31 @@ export EDITOR="nvim"
 if [ -f "$(which patdiff-git-wrapper)" ]; then
     export GIT_EXTERNAL_DIFF=$(which patdiff-git-wrapper)
 fi
+
+export TIMEFMT='%J    %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %K MB'$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
+
+
+#### CUSTOM FUNCTIONS ####
+
+alias 'where'='rg -p'  #'grep -nrw'
+
+# make path and enter
+take() { mkdir -p "$1" && cd "$1" }
+
+# draw a horizontal line
+function rule {
+    if [ -z "$1" ]
+    then
+        V="-"
+    else
+        V="$1"
+    fi
+
+    V=$V bash -c 'printf -v _hr "%*s" $(tput cols) && echo ${_hr// /${V--}}'
+}
