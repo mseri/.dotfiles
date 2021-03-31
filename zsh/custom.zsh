@@ -26,6 +26,10 @@ export TIMEFMT='%J    %U  user %S system %P cpu %*E total'$'\n'\
 export TERM_ITALICS=true
 export CLICOLOR=true
 
+if command -v fasd >/dev/null 2>&1; then
+  eval "$(fasd --init zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install posix-alias)"
+fi
+
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR="nvim"
 
