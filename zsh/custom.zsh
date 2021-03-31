@@ -17,6 +17,9 @@ setopt inc_append_history
 
 #### AUTOCOMPLETE SETUP ####
 
+autoload -U compinit
+compinit
+
 unsetopt menu_complete   # do not autoselect the first completion entry
 unsetopt flowcontrol
 setopt auto_menu         # show completion menu on succesive tab press
