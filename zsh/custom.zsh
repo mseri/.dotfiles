@@ -30,7 +30,7 @@ WORDCHARS=''
 
 zmodload -i zsh/complist
 
-## case-insensitive (all),partial-word and then substring completion
+# case-insensitive (all),partial-word and then substring completion
 if [ "x$CASE_SENSITIVE" = "xtrue" ]; then
   zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   unset CASE_SENSITIVE
@@ -79,6 +79,12 @@ if [ "x$COMPLETION_WAITING_DOTS" = "xtrue" ]; then
 fi
 
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+
+#### FOLDER STACK ####
+
+DIRSTACKSIZE=8
+setopt autopushd pushdminus pushdsilent pushdtohome
+alias dh='dirs -v'
 
 #### MAIN ####
 
