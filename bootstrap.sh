@@ -35,15 +35,10 @@ git pull
 install_dotfile "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig"
 install_dotfile "$HOME/.dotfiles/git/gitignore_global" "$HOME/.gitignore_global"
 #install_dotfile "$HOME/.dotfiles/i3/config" "$HOME/.config/i3/config"
-#install_dotfile "$HOME/.dotfiles/tmux/tmux.conf" "$HOME/.tmux.conf"
 install_dotfile "$HOME/.dotfiles/nvim/init.vim" "$HOME/.config/nvim/init.vim"
-#install_dotfile "$HOME/.dotfiles/Code/settings.json" "$HOME/.config/Code/User/settings.json"
-#install_dotfile "$HOME/.dotfiles/terminator/config" "$HOME/.config/terminator/config"
-#install_dotfile "$HOME/.dotfiles/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
-#install_dotfile "$HOME/.dotfiles/ssh/config" "$HOME/.ssh/config"
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
+install_dotfile "$HOME/.dotfiles/ocamlinit" "$HOME/.ocamlinit"
 install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
-$install_dotfile "$HOME/.dotfiles/zsh/custom.zsh" "$HOME/.custom.zsh"
 
 # OS specific config
 case "$OSTYPE" in
@@ -53,7 +48,7 @@ case "$OSTYPE" in
         ;;
 esac
 
-if [ ! -d "$HOME/powerlevel10k" ]; then
+if [ ! -d "$HOME/.powerlevel10k" ]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.powerlevel10k
 fi
 
@@ -61,11 +56,6 @@ if [ ! -d "$HOME/.fsd" ]; then
     git clone https://github.com/zdharma/fast-syntax-highlighting ~/.fsd
 fi
 
-#if [ ! -d "$HOME/.emacs.d" ]; then
-#    git clone https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
-#fi
-#install_dotfile "$HOME/.dotfiles/spacemacs/spacemacs" "$HOME/.spacemacs"
-
-echo "Remember to run source ~/.zshrc to refresh zsh configuration"
+echo "Remember to restart the shell to refresh zsh configuration"
 cd "$HOME"
 echo "Initalization complete!"

@@ -28,8 +28,8 @@ Plug 'godlygeek/tabular'
 Plug 'luochen1990/rainbow'
 "Plug 'rgrinberg/vim-ocaml'
 Plug 'w0rp/ale'
-Plug g:ocamlocpindent, { 'for': 'ocaml' }
-Plug g:ocamlmerlin, { 'for': 'ocaml' }
+"Plug g:ocamlocpindent, { 'for': 'ocaml' }
+"Plug g:ocamlmerlin, { 'for': 'ocaml' }
 
 Plug 'ajmwagar/vim-deus'
 
