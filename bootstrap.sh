@@ -35,8 +35,10 @@ git pull
 install_dotfile "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig"
 install_dotfile "$HOME/.dotfiles/git/gitignore_global" "$HOME/.gitignore_global"
 #install_dotfile "$HOME/.dotfiles/i3/config" "$HOME/.config/i3/config"
-install_dotfile "$HOME/.dotfiles/nvim/init.vim" "$HOME/.config/nvim/init.vim"
+install_dotfile "$HOME/.dotfiles/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/plugins.lua" "$HOME/.config/nvim/lua/plugins.lua"
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
+install_dotfile "$HOME/.dotfiles/latexmkrc" "$HOME/.latexmkrc"
 install_dotfile "$HOME/.dotfiles/ocamlinit" "$HOME/.ocamlinit"
 install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
 
@@ -54,6 +56,10 @@ fi
 
 if [ ! -d "$HOME/.fsd" ]; then
     git clone https://github.com/zdharma/fast-syntax-highlighting ~/.fsd
+fi
+
+if [ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/" ]
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 fi
 
 echo "Remember to restart the shell to refresh zsh configuration"
