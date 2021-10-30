@@ -58,8 +58,9 @@ if [ ! -d "$HOME/.fsd" ]; then
     git clone https://github.com/zdharma/fast-syntax-highlighting ~/.fsd
 fi
 
-if [ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/" ]
+if [ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/" ]; then
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    echo "Make sure to run ':PackerSync' the first time you open neovim"
 fi
 
 echo "Remember to restart the shell to refresh zsh configuration"
