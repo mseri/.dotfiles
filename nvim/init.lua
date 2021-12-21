@@ -60,6 +60,10 @@ augroup vimtex_common
             \ [v:servername],
             \ (has('win32') ? $TEMP : "/tmp") . "/vimtexserver.txt")
 augroup END
+
+" remove ex mode
+map Q <Nop>
+map q: <Nop>
 ]]
 -- function! UpdateSkim() abort
 --   let l:out = b:vimtex.out()

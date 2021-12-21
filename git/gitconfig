@@ -7,6 +7,9 @@
     editor = nvim
 [color]
     ui = true
+    status=auto
+[branch]
+    autosetuprebase = always
 [format]
     signOff = true
 [commit]
@@ -22,16 +25,25 @@
     cs = commit -s
     csa = commit -as
     last = log -1 HEAD
-	ll = log --pretty=format:%C(green)%h\\ %ad%C(yellow)%d\\ %Creset%s%Cblue\\ [%cn] --decorate --date=short
-	recent = branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\"
+	  ll = log --pretty=format:%C(green)%h\\ %ad%C(yellow)%d\\ %Creset%s%Cblue\\ [%cn] --decorate --date=short
+	  recent = branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\"
 [github]
     user = mseri
 [core]
     excludesfile = ~/.gitignore_global
     pager = less -x4,9
 [merge]
-	tool = meld
-[pull]
-	rebase = false
+    ff = true
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [init]
-	defaultBranch = main
+	  defaultBranch = main
+[diff]
+    tool = nvimdiff
+    algorithm = patience
+# add "--rebase" to git pull
+[branch]
+    autosetuprebase = always
+[pull]
+	  rebase = false
+    ff = only
