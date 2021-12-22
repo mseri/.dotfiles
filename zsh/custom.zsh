@@ -121,6 +121,9 @@ alias 'where'='rg -p'  #'grep -nrw'
 # make path and enter
 take() { mkdir -p "$1" && cd "$1" }
 
+# watch tex files for rebuild
+texwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} tectonic "$1" }
+
 # draw a horizontal line
 function rule {
     if [ -z "$1" ]
