@@ -99,7 +99,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export EDITOR="nvim"
 
 # OPAM configuration
-. $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+[[ ! -r $HOME/.opam/opam-init/init.zsh ]] || source $HOME/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 if [ -f "$(which patdiff-git-wrapper)" ]; then
     export GIT_EXTERNAL_DIFF=$(which patdiff-git-wrapper)

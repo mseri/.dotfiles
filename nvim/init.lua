@@ -49,17 +49,20 @@ vim.opt.diffopt = 'filler,internal,algorithm:histogram,indent-heuristic'
 require('plugins')
 
 vim.cmd [[
-let g:vimtex_view_method = 'skim'
 
-"let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-"let g:vimtex_view_general_options = '-r @line @pdf @tex'
+function! s:write_server_name() abort
+  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
+  call writefile([v:servername], nvim_server_file)
+endfunction
 
 augroup vimtex_common
-      autocmd!
-      autocmd FileType tex call writefile(
-            \ [v:servername],
-            \ (has('win32') ? $TEMP : "/tmp") . "/vimtexserver.txt")
+  autocmd!
+  autocmd FileType tex call s:write_server_name()
 augroup END
+
+"let g:vimtex_view_method = 'skim'
+let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+let g:vimtex_view_general_options = '-r @line @pdf @tex'
 
 " remove ex mode
 map Q <Nop>
