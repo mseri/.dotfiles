@@ -123,6 +123,7 @@ take() { mkdir -p "$1" && cd "$1" }
 
 # watch tex files for rebuild
 texwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} tectonic "$1" }
+texmkwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} latexmk -pdf "$1" }
 
 # draw a horizontal line
 function rule {
