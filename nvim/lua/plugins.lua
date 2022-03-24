@@ -1,6 +1,8 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function()
+  use{'lewis6991/impatient.nvim', config = [[require('impatient')]]}
+
   -- manage packer using packer.nvim
   use 'wbthomason/packer.nvim'
 
@@ -80,7 +82,8 @@ return require('packer').startup(function()
     'hrsh7th/nvim-cmp',
     requires = {
       'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path'
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-omni'
     },
     config = function()
       local cmp = require 'cmp'
@@ -91,32 +94,38 @@ return require('packer').startup(function()
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<Tab>'] = function(fallback)
-            if vim.fn.pumvisible() == 1 then
-              vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+            if cmp.visible() then
+              cmp.select_next_item()
             else
               fallback()
             end
           end,
           ['<S-Tab>'] = function(fallback)
-            if vim.fn.pumvisible() == 1 then
-              vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
+            if cmp.visible() then
+              cmp.select_prev_item()
             else
               fallback()
             end
-          end,
-          ['C-<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          end, 
+          ['<ESC>'] = cmp.mapping.close(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        },
+        completion = {
+          keyword_length = 1,
+          completeopt = "menu,noselect"
         },
         sources = {
           { name = 'nvim_lsp' },
-          { name = 'path' }
+          { name = 'path' },
+          { name = 'omni' }
         }
       }
     end
   }
 
-
   use {
     'neovim/nvim-lspconfig',
+    after = "cmp-nvim-lsp",
     config = function()
       local nvim_lsp = require('lspconfig')
 
