@@ -42,7 +42,7 @@ return require('packer').startup(function()
     },
     config = function ()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = 'maintained',
+        ensure_installed = 'all',
         highlight = {
           enable = true,
           disable = { 'tex' },
