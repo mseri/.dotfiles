@@ -1,4 +1,4 @@
-vim.g.python3_host_prog = '/opt/local/bin/python3'
+vim.g.python3_host_prog = '/opt/local/bin/python3.9'
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
