@@ -101,9 +101,9 @@ export EDITOR="nvim"
 # OPAM configuration
 [[ ! -r $HOME/.opam/opam-init/init.zsh ]] || source $HOME/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
-if [ -f "$(which patdiff-git-wrapper)" ]; then
-    export GIT_EXTERNAL_DIFF=$(which patdiff-git-wrapper)
-fi
+# if [ -f "$(which patdiff-git-wrapper)" ]; then
+#     export GIT_EXTERNAL_DIFF=$(which patdiff-git-wrapper)
+# fi
 
 export TIMEFMT='%J    %U  user %S system %P cpu %*E total'$'\n'\
 'avg shared (code):         %X KB'$'\n'\
@@ -122,7 +122,7 @@ alias 'where'='rg -p'  #'grep -nrw'
 take() { mkdir -p "$1" && cd "$1" }
 
 # watch tex files for rebuild
-texwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} tectonic "$1" }
+texwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} tectonic --synctex "$1" }
 texmkwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} latexmk -pdf "$1" }
 
 # draw a horizontal line
