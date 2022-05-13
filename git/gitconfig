@@ -7,7 +7,7 @@
     editor = nvim
 [color]
     ui = true
-    status=auto
+    status = auto
 [branch]
     autosetuprebase = always
 [format]
@@ -32,18 +32,12 @@
 [core]
     excludesfile = ~/.gitignore_global
     pager = less -x4,9
-[merge]
-    ff = true
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [init]
 	  defaultBranch = main
 [diff]
     tool = nvimdiff
-    algorithm = patience
-# add "--rebase" to git pull
+    algorithm = histogram
 [branch]
     autosetuprebase = always
-[pull]
-	  rebase = false
-    ff = only
