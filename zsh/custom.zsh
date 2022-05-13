@@ -122,8 +122,8 @@ alias 'where'='rg -p'  #'grep -nrw'
 take() { mkdir -p "$1" && cd "$1" }
 
 # watch tex files for rebuild
-texwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} tectonic --synctex "$1" }
-texmkwatch() { fswatch -or -e ".*" -i "\\.tex$" . | xargs -n1 -I{} latexmk -pdf "$1" }
+texwatch() { fd ".*.tex" | entr tectonic --synctex "$1" }
+texmkwatch() { fd ".*.tex" | entr latexmk -pdf "$1" }
 
 # draw a horizontal line
 function rule {
