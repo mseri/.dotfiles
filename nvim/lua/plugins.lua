@@ -45,8 +45,7 @@ return require('packer').startup(function()
         ensure_installed = 'all',
         highlight = {
           enable = true,
-          disable = { 'tex' },
-          additional_vim_regex_highlighting = true,
+          disable = { 'tex', 'latex' },
         },
         context_commentstring = {
           enable = true
