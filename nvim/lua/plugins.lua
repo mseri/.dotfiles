@@ -37,18 +37,14 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
     requires = {
-      'romgrk/nvim-treesitter-context',
-      'JoosepAlviste/nvim-ts-context-commentstring'
+      'romgrk/nvim-treesitter-context'
     },
     config = function ()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = 'all',
+        ensure_installed = "all",
         highlight = {
           enable = true,
-          disable = { 'tex', 'latex' },
-        },
-        context_commentstring = {
-          enable = true
+          disable = { "latex" },
         },
         incremental_selection = {
           enable = true,
