@@ -3,6 +3,8 @@
     email = marcello.seri@gmail.com
 [push]
     default = matching
+[pull]
+    rebase = false
 [core]
     editor = nvim
 [color]
