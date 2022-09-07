@@ -28,11 +28,11 @@
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [pager]
-    diftool = true
+    difftool = true
 [init]
 	  defaultBranch = main
 [diff]
-    tool = difft
+    tool = difftastic
     algorithm = histogram
 [branch]
     autosetuprebase = always
