@@ -44,7 +44,7 @@ vim.opt.showcmd = true
 vim.opt.lazyredraw = true
 vim.opt.termguicolors = true
 
-vim.opt.diffopt = 'filler,internal,algorithm:histogram,indent-heuristic'
+vim.opt.diffopt = 'filler,internal,algorithm:histogram,indent-heuristic,followwrap'
 
 require('plugins')
 

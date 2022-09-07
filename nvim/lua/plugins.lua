@@ -46,8 +46,13 @@ return require('packer').startup(function()
           enable = true,
           disable = { "latex" },
         },
+        indent = {
+          enable = true,
+          disable = { "latex" },
+        },
         incremental_selection = {
           enable = true,
+          disable = { "latex" },
           keymaps = {
             init_selection = "gnn",
             node_incremental = "grn",

@@ -14,6 +14,26 @@
     signOff = true
 [commit]
     signOff = true
+[github]
+    user = mseri
+[core]
+    excludesfile = ~/.gitignore_global
+    pager = less -x4,9
+[difftool]
+    prompt = false
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[pager]
+    diftool = true
+[init]
+	  defaultBranch = main
+[diff]
+    tool = difft
+    algorithm = histogram
+[branch]
+    autosetuprebase = always
 [alias]
     st = status -sb
     co = checkout
@@ -27,17 +47,5 @@
     last = log -1 HEAD
 	  ll = log --pretty=format:%C(green)%h\\ %ad%C(yellow)%d\\ %Creset%s%Cblue\\ [%cn] --decorate --date=short
 	  recent = branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\"
-[github]
-    user = mseri
-[core]
-    excludesfile = ~/.gitignore_global
-    pager = less -x4,9
-[difftool "nvimdiff"]
-    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
-[init]
-	  defaultBranch = main
-[diff]
-    tool = nvimdiff
-    algorithm = histogram
-[branch]
-    autosetuprebase = always
+    nicediff = diff -w --histogram --minimal --color-words
+    vimdiff = diff --tool=nvimdiff
