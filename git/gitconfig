@@ -34,8 +34,6 @@
 [diff]
     tool = difftastic
     algorithm = histogram
-[branch]
-    autosetuprebase = always
 [alias]
     st = status -sb
     co = checkout
