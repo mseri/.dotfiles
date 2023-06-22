@@ -18,7 +18,8 @@ select = "underline"
 
 [editor.indent-guides]
 render = true
-character = "▏"
+character = "│"
+skip-levels = 0
 
 [editor.lsp]
 display-messages = true
