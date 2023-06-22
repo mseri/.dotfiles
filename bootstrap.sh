@@ -35,6 +35,7 @@ git pull
 install_dotfile "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig"
 install_dotfile "$HOME/.dotfiles/git/gitignore_global" "$HOME/.gitignore_global"
 #install_dotfile "$HOME/.dotfiles/i3/config" "$HOME/.config/i3/config"
+install_dotfile "$HOME/.dotfiles/helix/config.toml" "$HOME/.config/helix/config.toml"
 install_dotfile "$HOME/.dotfiles/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 install_dotfile "$HOME/.dotfiles/nvim/lua/plugins.lua" "$HOME/.config/nvim/lua/plugins.lua"
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
