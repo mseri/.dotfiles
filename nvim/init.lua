@@ -67,23 +67,31 @@ if vim.g.neovide then
   vim.g.neovide_cursor_trail_size = 0
   vim.g.neovide_cursor_animation_length = 0
 end
+
 require('plugins')
 
+
+-- vim.cmd [[
+
+-- function! s:write_server_name() abort
+--   let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
+--   call writefile([v:servername], nvim_server_file)
+-- endfunction
+--
+-- augroup vimtex_common
+--   autocmd!
+--   autocmd FileType tex call s:write_server_name()
+-- augroup END
+--
+-- "let g:vimtex_view_method = 'skim'
+-- let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+-- let g:vimtex_view_general_options = '-r @line @pdf @tex'
+--
 vim.cmd [[
-
-function! s:write_server_name() abort
-  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
-  call writefile([v:servername], nvim_server_file)
-endfunction
-
-augroup vimtex_common
-  autocmd!
-  autocmd FileType tex call s:write_server_name()
-augroup END
-
-"let g:vimtex_view_method = 'skim'
-let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-let g:vimtex_view_general_options = '-r @line @pdf @tex'
+let g:tex_flavor='latex'
+let g:vimtex_view_method = 'skim'
+let g:vimtex_view_skim_sync = 1
+let g:vimtex_view_skim_activate = 1
 
 " remove ex mode
 map Q <Nop>
