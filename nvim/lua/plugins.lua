@@ -269,4 +269,5 @@ return require('packer').startup(function()
     end
   }
 
+  use 'github/copilot.vim'
 end)
