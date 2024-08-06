@@ -1,4 +1,4 @@
-vim.g.python3_host_prog = '/opt/local/bin/python3.9'
+vim.g.python3_host_prog = '/opt/local/bin/python3.11'
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
@@ -70,6 +70,17 @@ end
 
 require('plugins')
 
+
+-- Telescope keybindings
+vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>Telescope find_files<cr>", { noremap = true, silent = true, desc = "Telescope - Find Files" })
+vim.api.nvim_set_keymap('n', '<leader>fg', "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true, desc = "Telescope - Live Grep" })
+vim.api.nvim_set_keymap('n', '<leader>fb', "<cmd>Telescope buffers<cr>", { noremap = true, silent = true, desc = "Telescope - Buffers" })
+vim.api.nvim_set_keymap('n', '<leader>fh', "<cmd>Telescope help_tags<cr>", { noremap = true, silent = true, desc = "Telescope - Help Tags" })
+
+-- CopilotChat keybindings
+vim.api.nvim_set_keymap('n', '<leader>cch', [[:lua require("CopilotChat.integrations.telescope").pick(require("CopilotChat.actions").help_actions())<cr>]], { noremap = true, silent = true, desc = "CopilotChat - Help actions" })
+vim.api.nvim_set_keymap('n', '<leader>ccp', [[:lua require("CopilotChat.integrations.telescope").pick(require("CopilotChat.actions").prompt_actions())<cr>]], { noremap = true, silent = true, desc = "CopilotChat - Prompt actions" })
+vim.api.nvim_set_keymap('n', '<leader>ccr', [[:lua require("CopilotChat.integrations.telescope").pick(require("CopilotChat.actions").response_actions())<cr>]], { noremap = true, silent = true, desc = "CopilotChat - Response actions" })
 
 -- vim.cmd [[
 
