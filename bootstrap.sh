@@ -52,6 +52,10 @@ case "$OSTYPE" in
         ;;
 esac
 
+if which llm > /dev/null; then
+  install_dotfile $HOME/.dotfiles/tools/q $HOME/.local/bin/q
+fi
+
 if [ ! -d "$HOME/.powerlevel10k" ]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.powerlevel10k
 fi
