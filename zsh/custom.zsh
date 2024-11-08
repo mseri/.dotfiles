@@ -150,3 +150,11 @@ function ollama() {
   fi
 }
 
+function html_to_md () {
+  if [[ $# -eq 2 ]]; then
+    curl "https://r.jina.ai/$1" > "$2".md
+    echo "Content saved to \"$2\".md"
+  else
+    curl "https://r.jina.ai/$@"
+  fi
+}
