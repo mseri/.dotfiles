@@ -49,3 +49,5 @@
 	  recent = branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\"
     nicediff = diff -w --histogram --minimal --color-words
     vimdiff = diff --tool=nvimdiff
+[include]
+	path = /Users/mseri/.local/share/toolgit/aliases.ini

@@ -12,7 +12,7 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 source "$HOME/.dotfiles/zsh/custom.zsh"
 source "$HOME/.fsd/fast-syntax-highlighting.plugin.zsh"
-
+source "$HOME/.customenv"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
