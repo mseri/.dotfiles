@@ -1,2 +1,7 @@
 #!/bin/sh
-llm -s "Answer in as few words as possible. Use a brief style with short replies." -m qwen2.5-3b "$*"
+output=$(llm models default | xargs)
+if [[ $output == "gpt-4o-mini" ]]; then
+  echo "Set the default model with: llm models default MODEL"
+  exit 1
+fi
+llm -s "Answer in as few words as possible. Use a brief style with short replies." "$*"

@@ -24,7 +24,7 @@ install_dotfile () {
 }
 
 if [ "$PWD" != "$HOME/.dotfiles" ]; then
-    echo "Please execute bootstap.sh from .dotfiles directory in $HOME"
+    echo "Please execute bootstrap.sh from .dotfiles directory in $HOME"
     exit 1
 fi
 
@@ -65,10 +65,17 @@ if [ ! -d "$HOME/.fsd" ]; then
 fi
 
 if [ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/" ]; then
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
     echo "Make sure to run ':PackerSync' the first time you open neovim"
+fi
+
+if [ ! -d "$HOME/.local/share/toolgit" ]; then
+  # Some git utils
+  git clone https://github.com/ahmetsait/toolgit  $HOME/.local/share/toolgit
+  ln -s $HOME/.local/share/toolgit/git-* $HOME/.local/bin
+  git config set --append --global include.path $HOME/.local/share/toolgit/aliases.ini
 fi
 
 echo "Remember to restart the shell to refresh zsh configuration"
 cd "$HOME"
-echo "Initalization complete!"
+echo "Initialisation complete!"
