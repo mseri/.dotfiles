@@ -138,17 +138,17 @@ function rule {
 }
 
 # wrap the ollama command, if the parameter is pull with no other parameters pull all models
-function ollama() {
-  if [[ $1 == "pull" ]] && [[ $# -eq 1 ]]; then
-    echo "pulling all models..."
-    ollama list | awk '$1 !~ /^registry.local/ {print $1}' | while read -r model; do
-      echo "Pulling $model"
-      ollama pull "$model"
-    done
-  else
-    command ollama "$@"
-  fi
-}
+# function ollama() {
+#   if [[ $1 == "pull" ]] && [[ $# -eq 1 ]]; then
+#     echo "pulling all models..."
+#     ollama list | awk '$1 !~ /^registry.local/ {print $1}' | while read -r model; do
+#       echo "Pulling $model"
+#       ollama pull "$model"
+#     done
+#   else
+#     command ollama "$@"
+#   fi
+# }
 
 function html_to_md () {
   if [[ $# -eq 2 ]]; then

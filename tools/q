@@ -1,2 +1,2 @@
 #!/bin/sh
-llm -s "Answer in as few words as possible. Use a brief style with short replies." -m gemma2:2b-instruct-q4_K_M "$*"
+llm -s "Answer in as few words as possible. Use a brief style with short replies." -m qwen2.5-3b "$*"
