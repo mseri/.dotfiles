@@ -28,4 +28,4 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/marcelloseri/.cache/lm-studio/bin"
 
-. "$HOME/.cargo/env"
+[[ ! -f "$HOME/.cargo/env" ]] || source "$HOME/.cargo/env"
