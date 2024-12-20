@@ -189,6 +189,7 @@ qh() {
 qv() {
   local url="$1"
   local question="$2"
+  local model="${3:-gemini-2.0-flash-exp}"
 
   # Fetch the URL content through Jina
   local subtitle_url=$(yt-dlp -q --skip-download --convert-subs srt --write-sub --sub-langs "en" --write-auto-sub --print "requested_subtitles.en.url" "$url")
@@ -209,5 +210,5 @@ qv() {
   "
 
   # Use llm with the fetched content as a system prompt
-  llm prompt "$question" -s "$system"
+  llm prompt -m "$model" "$question" -s "$system"
 }
