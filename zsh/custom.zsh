@@ -158,3 +158,56 @@ function html_to_md () {
     curl "https://r.jina.ai/$@"
   fi
 }
+
+# from https://github.com/davidgasquez/dotfiles/blob/bb9df4a369dbaef95ca0c35642de491c7dd41269/shell/zshrc#L50-L99
+#
+qh() {
+  local url="$1"
+  local question="$2"
+
+  # Fetch the URL content through Jina
+  local content=$(curl -s "https://r.jina.ai/$url")
+
+  # Check if the content was retrieved successfully
+  if [ -z "$content" ]; then
+    echo "Failed to retrieve content from the URL."
+    return 1
+  fi
+
+  system="
+  You are a helpful assistant that can answer questions about the content.
+  Reply concisely, in a few sentences.
+
+  The content:
+  ${content}
+  "
+
+  # Use llm with the fetched content as a system prompt
+  llm prompt "$question" -s "$system"
+}
+
+qv() {
+  local url="$1"
+  local question="$2"
+
+  # Fetch the URL content through Jina
+  local subtitle_url=$(yt-dlp -q --skip-download --convert-subs srt --write-sub --sub-langs "en" --write-auto-sub --print "requested_subtitles.en.url" "$url")
+  local content=$(curl -s "$subtitle_url" | sed '/^$/d' | grep -v '^[0-9]*$' | grep -v '\-->' | sed 's/<[^>]*>//g' | tr '\n' ' ')
+
+  # Check if the content was retrieved successfully
+  if [ -z "$content" ]; then
+    echo "Failed to retrieve content from the URL."
+    return 1
+  fi
+
+  system="
+  You are a helpful assistant that can answer questions about YouTube videos.
+  Reply concisely, in a few sentences.
+
+  The content:
+  ${content}
+  "
+
+  # Use llm with the fetched content as a system prompt
+  llm prompt "$question" -s "$system"
+}
