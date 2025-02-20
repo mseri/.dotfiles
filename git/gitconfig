@@ -51,3 +51,4 @@
     vimdiff = diff --tool=nvimdiff
 [include]
 	path = /Users/mseri/.local/share/toolgit/aliases.ini
+	path = /Users/marcelloseri/.local/share/toolgit/aliases.ini

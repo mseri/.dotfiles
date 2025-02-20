@@ -34,14 +34,26 @@ git pull
 # Add links to these files
 install_dotfile "$HOME/.dotfiles/git/gitconfig" "$HOME/.gitconfig"
 install_dotfile "$HOME/.dotfiles/git/gitignore_global" "$HOME/.gitignore_global"
+
 #install_dotfile "$HOME/.dotfiles/i3/config" "$HOME/.config/i3/config"
+
 install_dotfile "$HOME/.dotfiles/helix/config.toml" "$HOME/.config/helix/config.toml"
 install_dotfile "$HOME/.dotfiles/helix/languages.toml" "$HOME/.config/helix/languages.toml"
+
 install_dotfile "$HOME/.dotfiles/nvim/init.lua" "$HOME/.config/nvim/init.lua"
-install_dotfile "$HOME/.dotfiles/nvim/lua/plugins.lua" "$HOME/.config/nvim/lua/plugins.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/config/lazy.lua" "$HOME/.config/nvim/lua/config/lazy.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/plugins/cmp.lua" "$HOME/.config/nvim/lua/plugins/cmp.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/plugins/colorscheme.lua" "$HOME/.config/nvim/lua/plugins/colorscheme.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/plugins/copilot.lua" "$HOME/.config/nvim/lua/plugins/copilot.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/plugins/lspconfig.lua" "$HOME/.config/nvim/lua/plugins/lspconfig.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/plugins/treesitter.lua" "$HOME/.config/nvim/lua/plugins/treesitter.lua"
+install_dotfile "$HOME/.dotfiles/nvim/lua/plugins/vimtex.lua" "$HOME/.config/nvim/lua/plugins/vimtex.lua"
+
 install_dotfile "$HOME/.dotfiles/utoprc" "$HOME/.utoprc"
-install_dotfile "$HOME/.dotfiles/latexmkrc" "$HOME/.latexmkrc"
 install_dotfile "$HOME/.dotfiles/ocamlinit" "$HOME/.ocamlinit"
+
+install_dotfile "$HOME/.dotfiles/latexmkrc" "$HOME/.latexmkrc"
+
 install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
 
 # OS specific config
@@ -62,11 +74,6 @@ fi
 
 if [ ! -d "$HOME/.fsd" ]; then
     git clone https://github.com/zdharma/fast-syntax-highlighting ~/.fsd
-fi
-
-if [ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/" ]; then
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
-    echo "Make sure to run ':PackerSync' the first time you open neovim"
 fi
 
 if [ ! -d "$HOME/.local/share/toolgit" ]; then
