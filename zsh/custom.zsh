@@ -16,6 +16,9 @@ setopt hist_verify
 setopt inc_append_history
 
 #### AUTOCOMPLETE SETUP ####
+if [ -d "$HOME/.zsh/completions" ] ; then
+  fpath=($HOME/.zsh/completions $fpath)
+fi
 
 autoload -U compinit
 compinit
