@@ -1,0 +1,9 @@
+prompt: "Analyze the attached discussion transcript and generate a structured summary.\
+    \ Follow these steps:\n\nOverview: Provide a concise 2\u20133 sentence summary\
+    \ of the discussion\u2019s purpose, key themes, and outcomes.\nDetailed Breakdown:\
+    \ Organize the content into clear sections (e.g., Topics Covered, Decisions Made,\
+    \ Action Items). Use bullet points for readability.\nKey Takeaways: Conclude with\
+    \ a numbered list of 3\u20135 main points, prioritizing actionable insights or\
+    \ unresolved questions.\n\nExample format:\n1. [Main Point 1] \u2013 [Brief explanation\
+    \ or implication].\n2. [Main Point 2] \u2013 [Supporting detail].\n\n\nTone: Maintain\
+    \ a neutral, factual tone. Avoid speculation or embellishment."
