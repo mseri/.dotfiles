@@ -16,6 +16,9 @@ setopt hist_verify
 setopt inc_append_history
 
 #### AUTOCOMPLETE SETUP ####
+if [ -d "$HOME/.zsh/completions" ] ; then
+  fpath=($HOME/.zsh/completions $fpath)
+fi
 
 autoload -U compinit
 compinit
@@ -189,7 +192,7 @@ qh() {
 qv() {
   local url="$1"
   local question="$2"
-  local model="${3:-gemini-2.0-flash-exp}"
+  local model="${3:-groq-llama-3.3-70b}"
 
   # Fetch the URL content through Jina
   local subtitle_url=$(yt-dlp -q --skip-download --convert-subs srt --write-sub --sub-langs "en" --write-auto-sub --print "requested_subtitles.en.url" "$url")
