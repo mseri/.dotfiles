@@ -153,12 +153,28 @@ function rule {
 #   fi
 # }
 
-function html_to_md () {
-  if [[ $# -eq 2 ]]; then
-    curl "https://r.jina.ai/$1" > "$2".md
-    echo "Content saved to \"$2\".md"
+html_to_md () {
+  local url dest
+  if command -v trafilatura &>/dev/null; then
+    # trafilatura is installed, use it
+    if [[ $# -eq 2 ]]; then
+      url=$1; dest=$2
+      trafilatura -u "$url" --markdown -o "${dest}.md"
+      echo "Content saved to \"${dest}\".md"
+    else
+      for url; do
+        trafilatura -u "$url" --markdown
+      done
+    fi
   else
-    curl "https://r.jina.ai/$@"
+    # fall back to jina
+    if [[ $# -eq 2 ]]; then
+      url=$1; dest=$2
+      curl -sS "https://r.jina.ai/$url" > "${dest}.md"
+      echo "Content saved to \"${dest}\".md"
+    else
+      curl -sS "https://r.jina.ai/$*"
+    fi
   fi
 }
 
@@ -192,7 +208,7 @@ qh() {
 qv() {
   local url="$1"
   local question="$2"
-  local model="${3:-groq-llama-3.3-70b}"
+  local model="${3:-groq-kimi-k2}"
 
   # Fetch the URL content through Jina
   local subtitle_url=$(yt-dlp -q --skip-download --convert-subs srt --write-sub --sub-langs "en" --write-auto-sub --print "requested_subtitles.en.url" "$url")
