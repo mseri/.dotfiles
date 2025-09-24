@@ -4,6 +4,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-omni',
+    'zbirenbaum/copilot-cmp',
   },
   config = function()
     local cmp = require 'cmp'
@@ -13,13 +14,22 @@ return {
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<Tab>'] = function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
+        ['<Tab>'] = cmp.mapping(function(fallback)
+          if require("copilot.suggestion").is_visible() then
+            require("copilot.suggestion").accept()
+          elseif cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+          elseif luasnip.expandable() then
+            luasnip.expand()
+          elseif has_words_before() then
+            cmp.complete()
           else
             fallback()
           end
-        end,
+        end, {
+            "i",
+            "s",
+          }),
         ['<S-Tab>'] = function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
@@ -35,9 +45,10 @@ return {
         completeopt = "menu,noselect"
       },
       sources = {
+        { name = 'copilot' },
         { name = 'nvim_lsp' },
         { name = 'path' },
-        { name = 'omni' }
+        { name = 'omni' },
       }
     }
   end

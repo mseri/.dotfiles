@@ -4,8 +4,6 @@ return {
     "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
-    local nvim_lsp = require('lspconfig')
-
     local on_attach = function(client, bufnr)
       local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
       local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -54,13 +52,15 @@ return {
 
     local servers = { 'ocamllsp' }
     for _, lsp in ipairs(servers) do
-      nvim_lsp[lsp].setup {
+      vim.lsp.config(lsp, {
+        cmd = {lsp},
         on_attach = on_attach,
         capabilities = capabilities,
         flags = {
           debounce_text_changes = 500,
         }
-      }
+      })
+      vim.lsp.enable(lsp)
     end
   end
 }
