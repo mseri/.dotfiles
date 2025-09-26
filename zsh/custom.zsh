@@ -231,3 +231,7 @@ qv() {
   # Use llm with the fetched content as a system prompt
   llm prompt -m "$model" "$question" -s "$system"
 }
+
+pdfdiff() {
+  diff <(pdftotext -layout "$1" /dev/stdout) <(pdftotext -layout "$2" /dev/stdout)
+}
