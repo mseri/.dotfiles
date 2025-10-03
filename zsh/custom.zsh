@@ -159,11 +159,11 @@ html_to_md () {
     # trafilatura is installed, use it
     if [[ $# -eq 2 ]]; then
       url=$1; dest=$2
-      trafilatura -u "$url" --markdown -o "${dest}.md"
+      trafilatura --formatting --links --images --markdown -u "$url" -o "${dest}.md"
       echo "Content saved to \"${dest}\".md"
     else
       for url; do
-        trafilatura -u "$url" --markdown
+        trafilatura --formatting --links --images --markdown -u "$url"
       done
     fi
   else
