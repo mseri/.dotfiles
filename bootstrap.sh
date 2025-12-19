@@ -56,6 +56,10 @@ install_dotfile "$HOME/.dotfiles/latexmkrc" "$HOME/.latexmkrc"
 
 install_dotfile "$HOME/.dotfiles/zsh/zshrc" "$HOME/.zshrc"
 
+install_dotfile "$HOME/.dotfiles/tigrc" "$HOME/.tigrc"
+
+install_dotfile "$HOME/.dotfiles/llama/lll" "$HOME/.local/bin/lll"
+
 # OS specific config
 case "$OSTYPE" in
     darwin*)
