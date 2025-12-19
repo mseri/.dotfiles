@@ -1,0 +1,5 @@
+bind status <F4> !git difftool -y %(commit) %(file)
+bind generic <F5> !git difftool -d --no-symlinks %(commit)
+set wrap-lines = true
+set diff-highlight = true
+set ignore-space = some
