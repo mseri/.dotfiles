@@ -59,7 +59,9 @@ def build_cli_command(config, model_key):
         cmd.extend(["-hf", model_key])
 
     for key, value in params.items():
-        if key == "chat-template-kwargs":
+        if key == "alias":
+            continue
+        elif key == "chat-template-kwargs":
             cmd.extend(["--chat-template-kwargs", value])
         else:
             cmd.extend([f"--{key}", str(value)])
