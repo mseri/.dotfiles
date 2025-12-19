@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-lll.py - Minimal llama-server/llama-run wrapper for models.ini
+lll - Minimal llama-server/llama-run wrapper for models.ini
 """
 
 import configparser
