@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+"""
+lll.py - Minimal llama-server/llama-run wrapper for models.ini
+"""
+
+import configparser
+import argparse
+import subprocess
+import sys
+from pathlib import Path
+
+INI_FILE = Path.home() / ".dotfiles" / "llama" / "models.ini"
+
+def load_ini():
+    """Load models.ini and return a config object."""
+    if not INI_FILE.exists():
+        print(f"Error: {INI_FILE} not found.", file=sys.stderr)
+        sys.exit(1)
+    # Read the file as text, remove the version line, then parse
+    with open(INI_FILE, 'r') as f:
+        lines = f.readlines()
+    # Remove lines starting with 'version ='
+    lines = [line for line in lines if not line.strip().startswith('version =')]
+    content = ''.join(lines)
+    config = configparser.ConfigParser()
+    config.read_string(content)
+    return config
+
+def get_aliases(config):
+    """Return a dict of alias -> model-hf/model path."""
+    aliases = {}
+    for section in config.sections():
+        if section == "*":
+            continue
+        if "alias" in config[section]:
+            aliases[config[section]["alias"]] = section
+    return aliases
+
+def build_command(config, model_key, dry=False):
+    """Build the llama-run command for the given model key."""
+    if model_key not in config:
+        print(f"Error: model {model_key} not found in {INI_FILE}.", file=sys.stderr)
+        sys.exit(1)
+
+    params = config[model_key]
+    cmd = ["llama-cli"]
+
+    # Add all parameters from the ini section
+    for k, v in params.items():
+        if k == "alias":
+            continue
+        if k == "model":
+            cmd.extend(["-m", v])
+        elif k == "chat-template-kwargs":
+            cmd.extend(["--chat-template-kwargs", v])
+        else:
+            cmd.extend([f"--{k}", str(v)])
+
+    if "-m" not in cmd:
+        cmd.extend(["-hf", model_key])
+
+    return cmd
+
+def main():
+    config = load_ini()
+    aliases = get_aliases(config)
+
+    parser = argparse.ArgumentParser(description="lll.py - llama-server/llama-run wrapper")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # run command
+    run_parser = subparsers.add_parser("run", help="Run a model by alias")
+    run_parser.add_argument("alias", nargs="?", help=f"Model alias to run.\nAvailable aliases: {', '.join(sorted(aliases))}")
+
+    # dry command
+    dry_parser = subparsers.add_parser("dry", help="Show the command for a model by alias")
+    dry_parser.add_argument("alias", nargs="?", help="Model alias as for the run command")
+
+    args = parser.parse_args()
+
+    if args.command in ("run", "dry"):
+        if not args.alias:
+            print(f"Available aliases: {', '.join(sorted(aliases))}")
+            print(f"Usage: lll.py {args.command} ALIAS")
+            sys.exit(1)
+        if args.alias not in aliases:
+            print(f"Error: unknown alias '{args.alias}'. Available aliases: {', '.join(sorted(aliases))}", file=sys.stderr)
+            sys.exit(1)
+        model_key = aliases[args.alias]
+        cmd = build_command(config, model_key, dry=args.command == "dry")
+        if args.command == "dry":
+            print(" ".join(cmd))
+        else:
+            try:
+                subprocess.run(cmd, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Error running command: {e}", file=sys.stderr)
+                sys.exit(1)
+        return
+if __name__ == "__main__":
+    main()
