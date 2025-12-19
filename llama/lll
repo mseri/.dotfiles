@@ -3,13 +3,14 @@
 lll - Minimal llama-server/llama-run wrapper for models.ini
 """
 
-import configparser
 import argparse
+import configparser
 import subprocess
 import sys
 from pathlib import Path
 
 INI_FILE = Path.home() / ".dotfiles" / "llama" / "models.ini"
+
 
 def load_ini():
     """Load models.ini and return a config object."""
@@ -17,14 +18,15 @@ def load_ini():
         print(f"Error: {INI_FILE} not found.", file=sys.stderr)
         sys.exit(1)
     # Read the file as text, remove the version line, then parse
-    with open(INI_FILE, 'r') as f:
+    with open(INI_FILE, "r") as f:
         lines = f.readlines()
     # Remove lines starting with 'version ='
-    lines = [line for line in lines if not line.strip().startswith('version =')]
-    content = ''.join(lines)
+    lines = [line for line in lines if not line.strip().startswith("version =")]
+    content = "".join(lines)
     config = configparser.ConfigParser()
     config.read_string(content)
     return config
+
 
 def get_aliases(config):
     """Return a dict of alias -> model-hf/model path."""
@@ -35,6 +37,7 @@ def get_aliases(config):
         if "alias" in config[section]:
             aliases[config[section]["alias"]] = section
     return aliases
+
 
 def build_command(config, model_key, dry=False):
     """Build the llama-run command for the given model key."""
@@ -61,22 +64,41 @@ def build_command(config, model_key, dry=False):
 
     return cmd
 
+
 def main():
     config = load_ini()
     aliases = get_aliases(config)
 
-    parser = argparse.ArgumentParser(description="lll.py - llama-server/llama-run wrapper")
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    parser = argparse.ArgumentParser(description="lll - llama-server/llama-run wrapper")
+    subparsers = parser.add_subparsers(dest="command", required=False)
 
     # run command
     run_parser = subparsers.add_parser("run", help="Run a model by alias")
-    run_parser.add_argument("alias", nargs="?", help=f"Model alias to run.\nAvailable aliases: {', '.join(sorted(aliases))}")
+    run_parser.add_argument(
+        "alias",
+        nargs="?",
+        help=f"Model alias to run.\nAvailable aliases: {', '.join(sorted(aliases))}",
+    )
 
     # dry command
-    dry_parser = subparsers.add_parser("dry", help="Show the command for a model by alias")
-    dry_parser.add_argument("alias", nargs="?", help="Model alias as for the run command")
+    dry_parser = subparsers.add_parser(
+        "dry", help="Show the command for a model by alias"
+    )
+    dry_parser.add_argument(
+        "alias", nargs="?", help="Model alias as for the run command"
+    )
 
     args = parser.parse_args()
+
+    # If no command given, run llama-server with models-preset
+    if args.command is None:
+        cmd = ["llama-server", "--models-preset", str(INI_FILE)]
+        try:
+            subprocess.run(cmd, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error running llama-server: {e}", file=sys.stderr)
+            sys.exit(1)
+        return
 
     if args.command in ("run", "dry"):
         if not args.alias:
@@ -84,7 +106,10 @@ def main():
             print(f"Usage: lll.py {args.command} ALIAS")
             sys.exit(1)
         if args.alias not in aliases:
-            print(f"Error: unknown alias '{args.alias}'. Available aliases: {', '.join(sorted(aliases))}", file=sys.stderr)
+            print(
+                f"Error: unknown alias '{args.alias}'. Available aliases: {', '.join(sorted(aliases))}",
+                file=sys.stderr,
+            )
             sys.exit(1)
         model_key = aliases[args.alias]
         cmd = build_command(config, model_key, dry=args.command == "dry")
@@ -97,5 +122,7 @@ def main():
                 print(f"Error running command: {e}", file=sys.stderr)
                 sys.exit(1)
         return
+
+
 if __name__ == "__main__":
     main()
