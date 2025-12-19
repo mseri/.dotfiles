@@ -95,6 +95,9 @@ def main():
         cmd = ["llama-server", "--models-preset", str(INI_FILE)]
         try:
             subprocess.run(cmd, check=True)
+        except KeyboardInterrupt:
+            print("\nShutting down llama-server...", file=sys.stderr)
+            sys.exit(0)
         except subprocess.CalledProcessError as e:
             print(f"Error running llama-server: {e}", file=sys.stderr)
             sys.exit(1)
@@ -118,6 +121,9 @@ def main():
         else:
             try:
                 subprocess.run(cmd, check=True)
+            except KeyboardInterrupt:
+                print("\nShutting down llama-cli...", file=sys.stderr)
+                sys.exit(0)
             except subprocess.CalledProcessError as e:
                 print(f"Error running command: {e}", file=sys.stderr)
                 sys.exit(1)
