@@ -41,12 +41,12 @@ def get_aliases(config):
     for section in config.sections():
         if section == "*":
             continue
-        if "alias" in config[section]:
-            aliases[config[section]["alias"]] = section
+        # Section headers are now the aliases
+        aliases[section] = section
     return aliases
 
 
-def build_cli_command(config, model_key):
+def build_cli_command(config, model_key, args):
     """Build llama-cli command with parameters from config section."""
     if model_key not in config:
         print(f"Error: model {model_key} not found in {INI_FILE}.", file=sys.stderr)
@@ -55,16 +55,21 @@ def build_cli_command(config, model_key):
     cmd = ["llama-cli"]
     params = config[model_key]
 
-    if "model" not in params.keys():
-        cmd.extend(["-hf", model_key])
-
     for key, value in params.items():
-        if key == "alias":
-            continue
+        if key == "model":
+            cmd.extend(["-hf", value])
         elif key == "chat-template-kwargs":
             cmd.extend(["--chat-template-kwargs", value])
         else:
             cmd.extend([f"--{key}", str(value)])
+
+    if not args.vision:
+      cmd.extend(["--no-mmproj"])
+    if args.gpu:
+      cmd.extend(["-ngl", "99" if args.gpu else "0"])
+
+    if args.fa:
+      cmd.extend(["--fa", "on"])
 
     return cmd
 
@@ -82,18 +87,18 @@ def run_server():
         sys.exit(1)
 
 
-def run_model(config, aliases, alias):
+def run_model(config, aliases, args):
     """Run a specific model using llama-cli."""
-    if alias not in aliases:
+    if args.alias not in aliases:
         print(
-            f"Error: unknown alias '{alias}'.\n"
+            f"Error: unknown alias '{args.alias}'.\n"
             f"Available aliases: {', '.join(sorted(aliases))}",
             file=sys.stderr,
         )
         sys.exit(1)
 
-    model_key = aliases[alias]
-    cmd = build_cli_command(config, model_key)
+    model_key = aliases[args.alias]
+    cmd = build_cli_command(config, model_key, args)
 
     try:
         subprocess.run(cmd, check=True)
@@ -105,18 +110,18 @@ def run_model(config, aliases, alias):
         sys.exit(1)
 
 
-def dry_run(config, aliases, alias):
+def dry_run(config, aliases, args):
     """Print the command that would be run for a model."""
-    if alias not in aliases:
+    if args.alias not in aliases:
         print(
-            f"Error: unknown alias '{alias}'.\n"
+            f"Error: unknown alias '{args.alias}'.\n"
             f"Available aliases: {', '.join(sorted(aliases))}",
             file=sys.stderr,
         )
         sys.exit(1)
 
-    model_key = aliases[alias]
-    cmd = build_cli_command(config, model_key)
+    model_key = aliases[args.alias]
+    cmd = build_cli_command(config, model_key, args)
     print(" ".join(cmd))
 
 
@@ -125,6 +130,21 @@ def main():
     aliases = get_aliases(config)
 
     parser = argparse.ArgumentParser(description="lll - llama-server/llama-cli wrapper")
+    parser.add_argument(
+        "--vision",
+        action="store_true",
+        help="Enable vision features (for multimodal models)",
+    )
+    parser.add_argument(
+      "--gpu",
+      action="store_true",
+      help="Offload to GPU",
+    )
+    parser.add_argument(
+      "--fa",
+      action="store_true",
+      help="Use flash attention",
+    )
     subparsers = parser.add_subparsers(dest="command", required=False)
 
     run_parser = subparsers.add_parser("run", help="Run a model by alias")
@@ -152,14 +172,14 @@ def main():
             print(f"Available aliases: {', '.join(sorted(aliases))}")
             print("Usage: lll run ALIAS")
             sys.exit(1)
-        run_model(config, aliases, args.alias)
+        run_model(config, aliases, args)
 
     elif args.command == "dry":
         if not args.alias:
             print(f"Available aliases: {', '.join(sorted(aliases))}")
             print("Usage: lll dry ALIAS")
             sys.exit(1)
-        dry_run(config, aliases, args.alias)
+        dry_run(config, aliases, args)
 
 
 if __name__ == "__main__":
