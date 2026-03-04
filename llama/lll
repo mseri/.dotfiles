@@ -63,10 +63,10 @@ def build_cli_command(config, model_key, args):
         else:
             cmd.extend([f"--{key}", str(value)])
 
+    cmd.extend(["-ngl", "99" if args.gpu else "0"])
+
     if not args.vision:
       cmd.extend(["--no-mmproj"])
-    if args.gpu:
-      cmd.extend(["-ngl", "99" if args.gpu else "0"])
 
     if args.fa:
       cmd.extend(["--fa", "on"])
