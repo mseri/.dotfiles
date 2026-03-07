@@ -56,12 +56,7 @@ def build_cli_command(config, model_key, args):
     params = config[model_key]
 
     for key, value in params.items():
-        if key == "model":
-            cmd.extend(["-hf", value])
-        elif key == "chat-template-kwargs":
-            cmd.extend(["--chat-template-kwargs", value])
-        else:
-            cmd.extend([f"--{key}", str(value)])
+        cmd.extend([f"--{key}", str(value)])
 
     cmd.extend(["-ngl", "99" if args.gpu else "0"])
 
@@ -74,10 +69,18 @@ def build_cli_command(config, model_key, args):
     return cmd
 
 
-def run_server():
+def run_server(args):
     """Start llama-server with models.ini preset."""
     cmd = ["llama-server", "--models-preset", str(INI_FILE)]
+
+    cmd.extend(["-ngl", "99" if args.gpu else "0"])
+    if not args.vision:
+      cmd.extend(["--no-mmproj"])
+    if args.fa:
+      cmd.extend(["--fa", "on"])
+
     try:
+        print(f"Calling: {cmd}")
         subprocess.run(cmd, check=True)
     except KeyboardInterrupt:
         print("\nShutting down llama-server...", file=sys.stderr)
@@ -164,7 +167,7 @@ def main():
     args = parser.parse_args()
 
     if args.command is None:
-        run_server()
+        run_server(args)
         return
 
     if args.command == "run":
