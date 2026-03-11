@@ -149,7 +149,10 @@ def main():
     config = load_ini()
     aliases = get_aliases(config)
 
-    parser = argparse.ArgumentParser(description="lll - llama-server/llama-cli wrapper")
+    parser = argparse.ArgumentParser(
+        description="lll - llama-server/llama-cli wrapper",
+        epilog=f"Available aliases: {', '.join(sorted(aliases))}"
+    )
     parser.add_argument(
         "--vision",
         action="store_true",
