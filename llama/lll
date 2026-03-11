@@ -10,11 +10,28 @@ Usage:
 
 import argparse
 import configparser
+import platform
 import subprocess
 import sys
 from pathlib import Path
 
 INI_FILE = Path.home() / ".dotfiles" / "llama" / "models.ini"
+
+
+def is_apple_silicon():
+    """Return True if running on Apple Silicon (ARM Mac)."""
+    return sys.platform == "darwin" and platform.machine() == "arm64"
+
+
+def resolve_gpu(args):
+    """Resolve whether GPU offloading should be enabled.
+
+    On Apple Silicon, GPU is on by default; --gpu disables it.
+    On Intel (or non-Mac), GPU is off by default; --gpu enables it.
+    """
+    if is_apple_silicon():
+        return not args.gpu
+    return args.gpu
 
 
 def load_ini():
@@ -58,7 +75,7 @@ def build_cli_command(config, model_key, args):
     for key, value in params.items():
         cmd.extend([f"--{key}", str(value)])
 
-    cmd.extend(["-ngl", "99" if args.gpu else "0"])
+    cmd.extend(["-ngl", "99" if resolve_gpu(args) else "0"])
 
     if not args.vision:
       cmd.extend(["--no-mmproj"])
@@ -73,7 +90,7 @@ def run_server(args):
     """Start llama-server with models.ini preset."""
     cmd = ["llama-server", "--models-preset", str(INI_FILE)]
 
-    cmd.extend(["-ngl", "99" if args.gpu else "0"])
+    cmd.extend(["-ngl", "99" if resolve_gpu(args) else "0"])
     if not args.vision:
       cmd.extend(["--no-mmproj"])
     if args.fa:
@@ -138,10 +155,11 @@ def main():
         action="store_true",
         help="Enable vision features (for multimodal models)",
     )
+    _apple_silicon = is_apple_silicon()
     parser.add_argument(
       "--gpu",
       action="store_true",
-      help="Offload to GPU",
+      help="Disable GPU offloading" if _apple_silicon else "Enable GPU offloading",
     )
     parser.add_argument(
       "--fa",
