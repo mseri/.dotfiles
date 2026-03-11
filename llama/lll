@@ -34,6 +34,16 @@ def resolve_gpu(args):
     return args.gpu
 
 
+def resolve_fa(args):
+    """Resolve whether flash attention should be enabled.
+
+    On Apple Silicon, FA is on by default; --fa disables it.
+    On Intel (or non-Mac), FA is off by default; --fa enables it.
+    """
+    if is_apple_silicon():
+        return not args.fa
+    return args.fa
+
 def load_ini():
     """Load models.ini, strip version line, and return parsed config."""
     if not INI_FILE.exists():
@@ -81,7 +91,7 @@ def build_cli_command(config, model_key, args):
       cmd.extend(["--no-mmproj"])
 
     if args.fa:
-      cmd.extend(["--fa", "on"])
+      cmd.extend(["--fa", "on" if resolve_fa(args) else "off"])
 
     return cmd
 
@@ -94,7 +104,7 @@ def run_server(args):
     if not args.vision:
       cmd.extend(["--no-mmproj"])
     if args.fa:
-      cmd.extend(["--fa", "on"])
+      cmd.extend(["--fa", "on" if resolve_fa(args) else "off"])
 
     try:
         print(f"Calling: {cmd}")
@@ -148,6 +158,7 @@ def dry_run(config, aliases, args):
 def main():
     config = load_ini()
     aliases = get_aliases(config)
+    _apple_silicon = is_apple_silicon()
 
     parser = argparse.ArgumentParser(
         description="lll - llama-server/llama-cli wrapper",
@@ -158,7 +169,6 @@ def main():
         action="store_true",
         help="Enable vision features (for multimodal models)",
     )
-    _apple_silicon = is_apple_silicon()
     parser.add_argument(
       "--gpu",
       action="store_true",
@@ -167,7 +177,7 @@ def main():
     parser.add_argument(
       "--fa",
       action="store_true",
-      help="Use flash attention",
+      help="Disable flash attention" if _apple_silicon else "Enable flash attention",
     )
     subparsers = parser.add_subparsers(dest="command", required=False)
 
