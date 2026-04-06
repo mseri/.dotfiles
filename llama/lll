@@ -91,7 +91,7 @@ def build_cli_command(config, model_key, args):
       cmd.extend(["--no-mmproj"])
 
     if args.fa:
-      cmd.extend(["--fa", "on" if resolve_fa(args) else "off"])
+      cmd.extend(["--flash-attn", "on" if resolve_fa(args) else "off"])
 
     return cmd
 
