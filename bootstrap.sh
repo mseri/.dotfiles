@@ -60,6 +60,13 @@ install_dotfile "$HOME/.dotfiles/tigrc" "$HOME/.tigrc"
 
 install_dotfile "$HOME/.dotfiles/llama/lll" "$HOME/.local/bin/lll"
 
+install_dotfile "$HOME/.dotfiles/claude/settings.json" "$HOME/.claude/settings.json"
+
+if [ -d "$HOME/.claude" ]; then
+  mkdir "$HOME/.claude/scripts"
+  install_dotfile "$HOME/.dotfiles/claude/statusline.sh" "$HOME/.claude/scripts/statusline.sh"
+fi
+
 # OS specific config
 case "$OSTYPE" in
     darwin*)
