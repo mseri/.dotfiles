@@ -15,6 +15,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from typing_extensions import ItemsView
+
 INI_FILE = Path.home() / ".dotfiles" / "llama" / "models.ini"
 
 
@@ -43,6 +45,7 @@ def resolve_fa(args):
     if is_apple_silicon():
         return not args.fa
     return args.fa
+
 
 def load_ini():
     """Load models.ini, strip version line, and return parsed config."""
@@ -82,16 +85,20 @@ def build_cli_command(config, model_key, args):
     cmd = ["llama-cli"]
     params = config[model_key]
 
+    if "no-mmap" in params.keys():
+        cmd.append("--no-mmap")
+        params.pop("no-mmap")
+
     for key, value in params.items():
         cmd.extend([f"--{key}", str(value)])
 
     cmd.extend(["-ngl", "99" if resolve_gpu(args) else "0"])
 
     if not args.vision:
-      cmd.extend(["--no-mmproj"])
+        cmd.extend(["--no-mmproj"])
 
     if args.fa:
-      cmd.extend(["--flash-attn", "on" if resolve_fa(args) else "off"])
+        cmd.extend(["--flash-attn", "on" if resolve_fa(args) else "off"])
 
     return cmd
 
@@ -102,9 +109,9 @@ def run_server(args):
 
     cmd.extend(["-ngl", "99" if resolve_gpu(args) else "0"])
     if not args.vision:
-      cmd.extend(["--no-mmproj"])
+        cmd.extend(["--no-mmproj"])
     if args.fa:
-      cmd.extend(["--fa", "on" if resolve_fa(args) else "off"])
+        cmd.extend(["--fa", "on" if resolve_fa(args) else "off"])
 
     try:
         print(f"Calling: {cmd}")
@@ -162,7 +169,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="lll - llama-server/llama-cli wrapper",
-        epilog=f"Available aliases: {', '.join(sorted(aliases))}"
+        epilog=f"Available aliases: {', '.join(sorted(aliases))}",
     )
     parser.add_argument(
         "--vision",
@@ -170,14 +177,14 @@ def main():
         help="Enable vision features (for multimodal models)",
     )
     parser.add_argument(
-      "--gpu",
-      action="store_true",
-      help="Disable GPU offloading" if _apple_silicon else "Enable GPU offloading",
+        "--gpu",
+        action="store_true",
+        help="Disable GPU offloading" if _apple_silicon else "Enable GPU offloading",
     )
     parser.add_argument(
-      "--fa",
-      action="store_true",
-      help="Disable flash attention" if _apple_silicon else "Enable flash attention",
+        "--fa",
+        action="store_true",
+        help="Disable flash attention" if _apple_silicon else "Enable flash attention",
     )
     subparsers = parser.add_subparsers(dest="command", required=False)
 
