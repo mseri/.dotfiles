@@ -37,7 +37,10 @@
       "Read(~/.docker/config.json)",
       "Read(~/.pypirc)",
       "Read(~/.gem/credentials)",
-      "Read(~/Library/**)"
+      "Read(~/Library/**)",
+
+      "Agent(Explore)"
+
     ],
     "allow": [
       "Read(~/Library/Python/**)",
@@ -65,11 +68,12 @@
       }
     ]
   },
+  "model": "opus",
+  "effortLevel": "low",
+  "theme": "dark",
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline.sh"
+    "command": "bash ~/.claude/statusline-command.sh"
   },
-  "model": "opus",
-  "theme": "dark",
   "agentPushNotifEnabled": true
 }
