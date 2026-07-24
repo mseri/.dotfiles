@@ -60,11 +60,14 @@ install_dotfile "$HOME/.dotfiles/tigrc" "$HOME/.tigrc"
 
 install_dotfile "$HOME/.dotfiles/llama/lll" "$HOME/.local/bin/lll"
 
-install_dotfile "$HOME/.dotfiles/claude/settings.json" "$HOME/.claude/settings.json"
-
 if [ -d "$HOME/.claude" ]; then
-  mkdir "$HOME/.claude/scripts"
-  install_dotfile "$HOME/.dotfiles/claude/statusline.sh" "$HOME/.claude/scripts/statusline.sh"
+  install_dotfile "$HOME/.dotfiles/claude/settings.json" "$HOME/.claude/settings.json"
+  install_dotfile "$HOME/.dotfiles/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+  if [ ! -d "$HOME/.claude/agents" ]; then
+    mkdir "$HOME/.claude/agents"
+  fi
+  install_doftile "$HOME/.dotfiles/claude/explore-haiku.md" "$HOME/.claude/agents/explore-haiku.md"
+  fi
 fi
 
 # OS specific config
