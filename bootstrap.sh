@@ -66,8 +66,7 @@ if [ -d "$HOME/.claude" ]; then
   if [ ! -d "$HOME/.claude/agents" ]; then
     mkdir "$HOME/.claude/agents"
   fi
-  install_doftile "$HOME/.dotfiles/claude/explore-haiku.md" "$HOME/.claude/agents/explore-haiku.md"
-  fi
+  install_dotfile "$HOME/.dotfiles/claude/explore-haiku.md" "$HOME/.claude/agents/explore-haiku.md"
 fi
 
 # OS specific config

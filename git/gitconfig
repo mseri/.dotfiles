@@ -20,20 +20,11 @@
     user = mseri
 [core]
     excludesfile = ~/.gitignore_global
-    pager = less -x4,9
-[difftool]
-    prompt = false
-[difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
-[difftool "nvimdiff"]
-    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
-[pager]
-    difftool = true
+    pager = diffr | less -R
+[interactive]
+    diffFilter = diffr
 [init]
 	  defaultBranch = main
-[diff]
-    tool = difftastic
-    algorithm = histogram
 [alias]
     st = status -sb
     co = checkout
@@ -49,6 +40,7 @@
 	  recent = branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\"
     nicediff = diff -w --histogram --minimal --color-words
     vimdiff = diff --tool=nvimdiff
+    difft = difftool --tool=difft
 [include]
-	path = /Users/mseri/.local/share/toolgit/aliases.ini
-	path = /Users/marcelloseri/.local/share/toolgit/aliases.ini
+	  path = /Users/mseri/.local/share/toolgit/aliases.ini
+	  path = /Users/marcelloseri/.local/share/toolgit/aliases.ini
